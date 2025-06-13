@@ -17,6 +17,8 @@
   - 响应式设计
   - 实时分析状态更新
   - 支持暗色/亮色主题
+##效果演示
+<img width="2047" alt="image" src="https://github.com/user-attachments/assets/fbb3503f-7785-4ac8-b2d3-bf5068b1a8b8" />
 
 ## 系统要求
 
