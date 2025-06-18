@@ -25,6 +25,58 @@ import { marked } from 'marked';
 import './App.css';
 
 /**
+ * 配置axios默认设置
+ */
+axios.defaults.timeout = 15000; // 15秒超时
+axios.defaults.headers.common['Content-Type'] = 'application/json';
+
+/**
+ * 创建axios实例用于API请求
+ */
+const apiClient = axios.create({
+  baseURL: 'http://10.211.55.15:8000', // 修改为你的服务器IP
+  timeout: 15000,
+  headers: {
+    'Content-Type': 'application/json',
+  },
+});
+
+/**
+ * 添加请求拦截器
+ */
+apiClient.interceptors.request.use(
+  (config) => {
+    console.log('发送请求:', config.method?.toUpperCase(), config.url);
+    return config;
+  },
+  (error) => {
+    console.error('请求拦截器错误:', error);
+    return Promise.reject(error);
+  }
+);
+
+/**
+ * 添加响应拦截器
+ */
+apiClient.interceptors.response.use(
+  (response) => {
+    console.log('收到响应:', response.status, response.config.url);
+    return response;
+  },
+  (error) => {
+    console.error('响应拦截器错误:', error);
+    if (error.code === 'ERR_NETWORK') {
+      console.error('网络错误详情:', {
+        message: error.message,
+        code: error.code,
+        config: error.config
+      });
+    }
+    return Promise.reject(error);
+  }
+);
+
+/**
  * 主应用组件
  * 
  * 提供完整的PenRecon平台用户界面，包括扫描控制、结果展示、AI分析等功能
@@ -65,6 +117,32 @@ function App() {
   const startY = useRef(0);
   const startHeight = useRef(0);
   const logEndRef = useRef(null);  // 日志容器底部引用
+
+  // ============================================================================
+  // 生命周期钩子
+  // ============================================================================
+  
+  /**
+   * 组件挂载时的初始化
+   */
+  useEffect(() => {
+    // 测试后端连接
+    testBackendConnection();
+  }, []);
+
+  /**
+   * 测试后端连接
+   */
+  const testBackendConnection = async () => {
+    try {
+      console.log('测试后端连接...');
+      const response = await apiClient.get('/ping');
+      console.log('后端连接正常:', response.data);
+    } catch (error) {
+      console.error('后端连接失败:', error);
+      setError('无法连接到后端服务，请确保后端已启动');
+    }
+  };
 
   // ============================================================================
   // 工具函数
@@ -120,7 +198,7 @@ function App() {
       setError(null);
       console.log('正在上传压缩文件...');
       
-      const response = await axios.post('http://localhost:8000/upload_compressed_results', formData, {
+      const response = await apiClient.post('/upload_compressed_results', formData, {
         headers: {
           'Content-Type': 'multipart/form-data',
         },
@@ -342,13 +420,18 @@ function App() {
       setError(null);
       setScanLogs([]);
 
+      console.log('开始检查现有结果，目标IP:', scanIp);
+      console.log('请求URL:', `/check_results_exists/${scanIp}`);
+
       // 检查是否已存在该IP的扫描结果
-      const existsResponse = await axios.get(`http://localhost:8000/check_results_exists/${scanIp}`);
+      const existsResponse = await apiClient.get(`/check_results_exists/${scanIp}`);
+      console.log('检查结果响应:', existsResponse);
       const resultsExist = existsResponse.data.exists;
 
       if (resultsExist) {
         setIpExistsForOverwrite(true);
         setShowOverwriteConfirm(true); // 显示确认对话框
+        setScanning(false); // 停止扫描状态，等待用户确认
         setScanLoading(false); // 停止加载指示器，等待用户输入
         return; // 等待用户确认
       } else {
@@ -358,7 +441,26 @@ function App() {
 
     } catch (err) {
       console.error("检查现有结果时出错:", err);
-      setError(`检查现有结果时出错: ${err.response?.data?.detail || err.message}`);
+      console.error("错误详情:", {
+        message: err.message,
+        code: err.code,
+        response: err.response,
+        request: err.request
+      });
+      
+      // 更详细的错误信息
+      let errorMessage = '检查现有结果时出错: ';
+      if (err.code === 'ERR_NETWORK') {
+        errorMessage += '网络连接失败，请检查后端服务是否启动';
+      } else if (err.response) {
+        errorMessage += err.response.data?.detail || err.response.statusText;
+      } else if (err.request) {
+        errorMessage += '请求已发送但未收到响应';
+      } else {
+        errorMessage += err.message;
+      }
+      
+      setError(errorMessage);
       setScanning(false);
       setScanLoading(false);
     }
@@ -374,13 +476,9 @@ function App() {
     setScanLoading(true); // 确认后重新开始加载
 
     try {
-      const scanResponse = await axios.post('http://localhost:8000/scan', {
+      const scanResponse = await apiClient.post('/scan', {
         ip: scanIp,
         overwrite: overwrite // 传递覆盖标志
-      }, {
-        headers: {
-          'Content-Type': 'application/json',
-        },
       });
 
       console.log('扫描启动响应:', scanResponse.data);
@@ -404,7 +502,7 @@ function App() {
       const pollingInterval = setInterval(async () => {
         try {
           // 使用initiatedScanId轮询状态和日志
-          const logsResponse = await axios.get(`http://localhost:8000/scan_status/${initiatedScanId}`);
+          const logsResponse = await apiClient.get(`/scan_status/${initiatedScanId}`);
           const logs = logsResponse.data.new_logs; // 后端返回'new_logs'
           setScanLogs(logs);
           if (logsResponse.data.status === 'completed' || logsResponse.data.status === 'failed') {
@@ -414,7 +512,7 @@ function App() {
             if (logsResponse.data.status === 'completed') {
               // 扫描完成后加载新生成的结果
               try {
-                const resultsResponse = await axios.get(`http://localhost:8000/scan_results/${initiatedScanId}`);
+                const resultsResponse = await apiClient.get(`/scan_results/${initiatedScanId}`);
                 if (resultsResponse.data.graph_data) {
                   setTreeData(resultsResponse.data.graph_data);
                   console.log('扫描完成后更新拓扑图数据:', resultsResponse.data.graph_data);
@@ -463,11 +561,33 @@ function App() {
     setIsAnalyzing(true); // 设置加载状态
     setAiAnalysisReport("正在生成 AI 分析报告，请稍候..."); // 显示临时消息
     try {
-      const response = await axios.get(`http://localhost:8000/analyze_scan_results/${ip}`);
+      console.log('开始AI分析，目标IP:', ip);
+      
+      // 为AI分析请求设置更长的超时时间
+      const response = await apiClient.get(`/analyze_scan_results/${ip}`, {
+        timeout: 180000, // 3分钟超时
+      });
+      
+      console.log('AI分析完成');
       setAiAnalysisReport(response.data.analysis_report);
     } catch (error) {
       console.error("获取AI分析时出错:", error);
-      setAiAnalysisReport(`AI 分析报告生成失败: ${error.message}. 请检查后端日志。`);
+      
+      // 更详细的错误处理
+      let errorMessage = 'AI 分析报告生成失败: ';
+      if (error.code === 'ECONNABORTED') {
+        errorMessage += '请求超时，AI分析可能需要更长时间。请稍后重试。';
+        // 提供重试选项
+        errorMessage += '\n\n如果问题持续存在，请检查：\n1. 网络连接是否稳定\n2. 后端服务是否正常运行\n3. AI服务是否可用';
+      } else if (error.response) {
+        errorMessage += error.response.data?.detail || error.response.statusText;
+      } else if (error.request) {
+        errorMessage += '无法连接到AI分析服务，请检查后端状态。';
+      } else {
+        errorMessage += error.message;
+      }
+      
+      setAiAnalysisReport(errorMessage);
     } finally {
       setIsAnalyzing(false); // 无论成功失败都设置加载状态为false
     }
@@ -483,7 +603,7 @@ function App() {
     setTreeData(null);
     setAiAnalysisReport(""); // 加载新结果时清除之前的分析
     try {
-      const response = await axios.get(`http://localhost:8000/load_existing_results/${scanIp}`);
+      const response = await apiClient.get(`/load_existing_results/${scanIp}`);
       setTreeData(response.data.graph_data);
       setScanLogs([]); // 清除现有结果的日志
       // 加载现有结果后触发AI分析
@@ -599,10 +719,22 @@ function App() {
                   <p>正在生成 AI 分析报告...</p>
                 </div>
               ) : (
-                <div 
-                  className="analysis-content"
-                  dangerouslySetInnerHTML={{ __html: marked(aiAnalysisReport) }}
-                />
+                <div>
+                  <div 
+                    className="analysis-content"
+                    dangerouslySetInnerHTML={{ __html: marked(aiAnalysisReport) }}
+                  />
+                  {aiAnalysisReport.includes('AI 分析报告生成失败') && (
+                    <div className="retry-section">
+                      <button 
+                        onClick={() => analyzeScanResults(scanIp)}
+                        className="retry-button"
+                      >
+                        重试AI分析
+                      </button>
+                    </div>
+                  )}
+                </div>
               )}
             </div>
           )}
@@ -618,7 +750,13 @@ function App() {
             <div className="dialog-buttons">
               <button onClick={() => confirmAndStartScan(true)}>覆盖</button>
               <button onClick={() => confirmAndStartScan(false)}>保留现有</button>
-              <button onClick={() => setShowOverwriteConfirm(false)}>取消</button>
+              <button onClick={() => {
+                setShowOverwriteConfirm(false);
+                setScanning(false);
+                setScanLoading(false);
+                setError(null);
+                setScanLogs([]);
+              }}>取消</button>
             </div>
           </div>
         </div>

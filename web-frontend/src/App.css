@@ -544,4 +544,30 @@ body {
 .logs-container::-webkit-scrollbar-thumb:hover,
 .main-content::-webkit-scrollbar-thumb:hover {
   background: #a8a8a8;
+}
+
+/* 重试按钮样式 */
+.retry-section {
+  margin-top: 20px;
+  text-align: center;
+}
+
+.retry-button {
+  background-color: #007bff;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 14px;
+  transition: background-color 0.3s;
+}
+
+.retry-button:hover {
+  background-color: #0056b3;
+}
+
+.retry-button:disabled {
+  background-color: #6c757d;
+  cursor: not-allowed;
 } 

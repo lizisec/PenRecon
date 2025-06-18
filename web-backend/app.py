@@ -1,19 +1,3 @@
-"""
-PenRecon - 渗透测试自动化平台后端API
-
-这个文件实现了PenRecon平台的后端API服务，主要功能包括：
-1. AutoRecon扫描管理 - 启动、监控、获取扫描结果
-2. 扫描结果解析 - 解析Nmap和漏洞扫描结果
-3. 网络拓扑图生成 - 将扫描结果转换为可视化数据
-4. AI分析集成 - 使用DeepSeek AI分析扫描结果
-5. 文件上传处理 - 支持压缩文件上传和解压
-6. 扫描状态管理 - 跟踪和管理扫描进度
-
-作者: PenRecon Team
-版本: 1.0.0
-"""
-
-# 标准库导入
 from fastapi import FastAPI, HTTPException, UploadFile, File
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import JSONResponse
@@ -89,7 +73,7 @@ app = FastAPI(
 # 配置CORS中间件，允许前端跨域访问
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["http://localhost:3000", "http://localhost:3001"],  # 允许的前端域名
+    allow_origins=["*"],  # 允许所有域名访问（开发环境）
     allow_credentials=True,
     allow_methods=["*"],  # 允许所有HTTP方法
     allow_headers=["*"],  # 允许所有请求头
@@ -252,13 +236,17 @@ class AutoReconAnalyzer:
                     {"role": "user", "content": prompt}
                 ],
                 temperature=0.7,
-                max_tokens=5000
+                max_tokens=5000,
+                timeout=120  # 设置120秒超时
             )
             logger.info("Received response from DeepSeek API.")
             return response.choices[0].message.content
         except Exception as e:
             logger.error(f"AI分析过程中出错: {str(e)}")
-            return f"AI分析过程中出错: {str(e)}"
+            if "timeout" in str(e).lower():
+                return "AI分析超时，请稍后重试。分析大量扫描结果可能需要更长时间。"
+            else:
+                return f"AI分析过程中出错: {str(e)}"
 
 # 创建全局AI分析器实例
 analyzer = AutoReconAnalyzer()
