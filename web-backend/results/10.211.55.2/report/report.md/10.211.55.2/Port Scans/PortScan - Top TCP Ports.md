@@ -1,0 +1,58 @@
+```bash
+nmap -vv --reason -Pn -T4 -sV -sC --version-all -A --osscan-guess -oN "/home/lizi/Desktop/myproj/PenRecon/web-backend/results/10.211.55.2/scans/_quick_tcp_nmap.txt" -oX "/home/lizi/Desktop/myproj/PenRecon/web-backend/results/10.211.55.2/scans/xml/_quick_tcp_nmap.xml" 10.211.55.2
+```
+
+[/home/lizi/Desktop/myproj/PenRecon/web-backend/results/10.211.55.2/scans/_quick_tcp_nmap.txt](file:///home/lizi/Desktop/myproj/PenRecon/web-backend/results/10.211.55.2/scans/_quick_tcp_nmap.txt):
+
+```
+# Nmap 7.95 scan initiated Wed Jun 18 15:43:41 2025 as: /usr/lib/nmap/nmap --privileged -vv --reason -Pn -T4 -sV -sC --version-all -A --osscan-guess -oN /home/lizi/Desktop/myproj/PenRecon/web-backend/results/10.211.55.2/scans/_quick_tcp_nmap.txt -oX /home/lizi/Desktop/myproj/PenRecon/web-backend/results/10.211.55.2/scans/xml/_quick_tcp_nmap.xml 10.211.55.2
+Nmap scan report for 10.211.55.2
+Host is up, received arp-response (0.000076s latency).
+Scanned at 2025-06-18 15:43:42 CST for 43s
+Not shown: 999 closed tcp ports (reset)
+PORT    STATE SERVICE       REASON         VERSION
+445/tcp open  microsoft-ds? syn-ack ttl 64
+MAC Address: 8A:66:5A:01:D0:64 (Unknown)
+OS fingerprint not ideal because: Didn't receive UDP response. Please try again with -sSU
+No OS matches for host
+TCP/IP fingerprint:
+SCAN(V=7.95%E=4%D=6/18%OT=445%CT=1%CU=%PV=Y%DS=1%DC=D%G=N%M=8A665A%TM=68526E59%P=x86_64-pc-linux-gnu)
+SEQ()
+ECN(R=N)
+T1(R=N)
+T2(R=N)
+T3(R=N)
+T4(R=N)
+T5(R=N)
+T6(R=N)
+T7(R=N)
+U1(R=N)
+IE(R=N)
+
+Network Distance: 1 hop
+
+Host script results:
+|_clock-skew: -40s
+| smb2-time: 
+|   date: 2025-06-18T07:43:42
+|_  start_date: N/A
+| p2p-conficker: 
+|   Checking for Conficker.C or higher...
+|   Check 1 (port 25064/tcp): CLEAN (Timeout)
+|   Check 2 (port 23716/tcp): CLEAN (Couldn't connect)
+|   Check 3 (port 25615/udp): CLEAN (Failed to receive data)
+|   Check 4 (port 26953/udp): CLEAN (Failed to receive data)
+|_  0/4 checks are positive: Host is CLEAN or ports are blocked
+| smb2-security-mode: 
+|   3:0:2: 
+|_    Message signing enabled and required
+
+TRACEROUTE
+HOP RTT     ADDRESS
+1   0.08 ms 10.211.55.2
+
+Read data files from: /usr/share/nmap
+OS and Service detection performed. Please report any incorrect results at https://nmap.org/submit/ .
+# Nmap done at Wed Jun 18 15:44:25 2025 -- 1 IP address (1 host up) scanned in 43.74 seconds
+
+```

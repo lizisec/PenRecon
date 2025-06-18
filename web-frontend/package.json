@@ -1,24 +1,98 @@
 {
-  "name": "autorecon-web",
+  "name": "penrecon-frontend",
+  "version": "1.0.0",
+  "description": "PenRecon渗透测试自动化平台前端应用",
   "private": true,
-  "version": "0.1.0",
   "type": "module",
   "scripts": {
     "dev": "vite",
+    "start": "vite",
     "build": "vite build",
+    "lint": "eslint . --ext js,jsx --report-unused-disable-directives --max-warnings 0",
     "preview": "vite preview"
   },
   "dependencies": {
-    "axios": "^1.6.7",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
-    "react-force-graph-2d": "^1.25.3",
-    "react-d3-tree": "^3.6.6"
+    "axios": "^1.6.7",
+    "react-d3-tree": "^3.6.6",
+    "marked": "^9.1.6"
   },
   "devDependencies": {
     "@types/react": "^18.2.55",
     "@types/react-dom": "^18.2.19",
     "@vitejs/plugin-react": "^4.2.1",
+    "eslint": "^8.55.0",
+    "eslint-plugin-react": "^7.33.2",
+    "eslint-plugin-react-hooks": "^4.6.0",
+    "eslint-plugin-react-refresh": "^0.4.5",
     "vite": "^5.1.0"
+  },
+  "engines": {
+    "node": ">=16.0.0",
+    "npm": ">=8.0.0"
+  },
+  "browserslist": {
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
+  },
+  "keywords": [
+    "penetration-testing",
+    "security",
+    "autorecon",
+    "network-scanning",
+    "react",
+    "visualization",
+    "ai-analysis"
+  ],
+  "author": "PenRecon Team",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/penrecon/penrecon.git"
+  },
+  "bugs": {
+    "url": "https://github.com/penrecon/penrecon/issues"
+  },
+  "homepage": "https://github.com/penrecon/penrecon#readme",
+  "_comment": {
+    "dependencies": {
+      "react": "React核心库，用于构建用户界面",
+      "react-dom": "React DOM渲染器，用于在浏览器中渲染React组件",
+      "axios": "HTTP客户端库，用于与后端API通信",
+      "react-d3-tree": "基于D3.js的React树状图组件，用于显示网络拓扑",
+      "marked": "Markdown解析器，用于渲染AI分析报告"
+    },
+    "devDependencies": {
+      "@types/react": "React的TypeScript类型定义",
+      "@types/react-dom": "React DOM的TypeScript类型定义",
+      "@vitejs/plugin-react": "Vite的React插件，用于快速开发和构建",
+      "eslint": "代码质量检查工具",
+      "eslint-plugin-react": "React特定的ESLint规则",
+      "eslint-plugin-react-hooks": "React Hooks的ESLint规则",
+      "eslint-plugin-react-refresh": "React Fast Refresh的ESLint规则",
+      "vite": "现代前端构建工具，提供快速的开发服务器"
+    },
+    "scripts": {
+      "dev": "启动开发服务器",
+      "start": "启动开发服务器（dev的别名）",
+      "build": "构建生产版本",
+      "lint": "运行ESLint代码检查",
+      "preview": "预览生产构建"
+    },
+    "version_compatibility": {
+      "node": "需要Node.js 16+版本",
+      "npm": "需要npm 8+版本",
+      "react": "使用React 18的新特性",
+      "vite": "使用Vite 5的现代构建工具"
+    }
   }
 }

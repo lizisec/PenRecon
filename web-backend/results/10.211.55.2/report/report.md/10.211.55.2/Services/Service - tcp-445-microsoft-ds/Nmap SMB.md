@@ -1,0 +1,61 @@
+```bash
+nmap -vv --reason -Pn -T4 -sV -p 445 --script="banner,(nbstat or smb* or ssl*) and not (brute or broadcast or dos or external or fuzzer)" -oN "/home/lizi/Desktop/myproj/PenRecon/web-backend/results/10.211.55.2/scans/tcp445/tcp_445_smb_nmap.txt" -oX "/home/lizi/Desktop/myproj/PenRecon/web-backend/results/10.211.55.2/scans/tcp445/xml/tcp_445_smb_nmap.xml" 10.211.55.2
+```
+
+[/home/lizi/Desktop/myproj/PenRecon/web-backend/results/10.211.55.2/scans/tcp445/tcp_445_smb_nmap.txt](file:///home/lizi/Desktop/myproj/PenRecon/web-backend/results/10.211.55.2/scans/tcp445/tcp_445_smb_nmap.txt):
+
+```
+# Nmap 7.95 scan initiated Wed Jun 18 15:44:25 2025 as: /usr/lib/nmap/nmap --privileged -vv --reason -Pn -T4 -sV -p 445 "--script=banner,(nbstat or smb* or ssl*) and not (brute or broadcast or dos or external or fuzzer)" -oN /home/lizi/Desktop/myproj/PenRecon/web-backend/results/10.211.55.2/scans/tcp445/tcp_445_smb_nmap.txt -oX /home/lizi/Desktop/myproj/PenRecon/web-backend/results/10.211.55.2/scans/tcp445/xml/tcp_445_smb_nmap.xml 10.211.55.2
+Nmap scan report for 10.211.55.2
+Host is up, received arp-response (0.00010s latency).
+Scanned at 2025-06-18 15:44:25 CST for 37s
+
+PORT    STATE SERVICE       REASON         VERSION
+445/tcp open  microsoft-ds? syn-ack ttl 64
+|_smb-enum-services: ERROR: Script execution failed (use -d to debug)
+MAC Address: 8A:66:5A:01:D0:64 (Unknown)
+
+Host script results:
+| smb2-capabilities: 
+|   2:0:2: 
+|     All capabilities are disabled
+|   2:1:0: 
+|     Leasing
+|     Multi-credit operations
+|   3:0:0: 
+|     Leasing
+|     Multi-credit operations
+|   3:0:2: 
+|     Leasing
+|_    Multi-credit operations
+| smb2-time: 
+|   date: 2025-06-18T07:43:42
+|_  start_date: N/A
+| smb2-security-mode: 
+|   3:0:2: 
+|_    Message signing enabled and required
+| smb-protocols: 
+|   dialects: 
+|     2:0:2
+|     2:1:0
+|     3:0:0
+|_    3:0:2
+| nbstat: NetBIOS name: LIZI, NetBIOS user: <unknown>, NetBIOS MAC: 8a:66:5a:01:d0:64 (unknown)
+| Names:
+|   LIZI<00>             Flags: <unique><active>
+|   LIZI<20>             Flags: <unique><active>
+|   WORKGROUP<00>        Flags: <group><active>
+| Statistics:
+|   8a:66:5a:01:d0:64:00:00:00:00:00:00:00:00:00:00:00
+|   00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00
+|_  00:00:00:00:00:00:00:00:00:00:00:00:00:00
+| smb-mbenum: 
+|_  ERROR: Failed to connect to browser service: Could not negotiate a connection:SMB: Failed to receive bytes: EOF
+|_smb-print-text: false
+|_smb-vuln-ms10-061: Could not negotiate a connection:SMB: Failed to receive bytes: EOF
+
+Read data files from: /usr/share/nmap
+Service detection performed. Please report any incorrect results at https://nmap.org/submit/ .
+# Nmap done at Wed Jun 18 15:45:02 2025 -- 1 IP address (1 host up) scanned in 36.70 seconds
+
+```

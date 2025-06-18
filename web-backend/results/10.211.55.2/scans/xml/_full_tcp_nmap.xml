@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE nmaprun>
+<?xml-stylesheet href="file:///usr/share/nmap/nmap.xsl" type="text/xsl"?>
+<!-- Nmap 7.95 scan initiated Wed Jun 18 15:43:41 2025 as: /usr/lib/nmap/nmap -&#45;privileged -vv -&#45;reason -Pn -T4 -sV -sC -&#45;version-all -A -&#45;osscan-guess -p- -oN /home/lizi/Desktop/myproj/PenRecon/web-backend/results/10.211.55.2/scans/_full_tcp_nmap.txt -oX /home/lizi/Desktop/myproj/PenRecon/web-backend/results/10.211.55.2/scans/xml/_full_tcp_nmap.xml 10.211.55.2 -->
+<nmaprun scanner="nmap" args="/usr/lib/nmap/nmap -&#45;privileged -vv -&#45;reason -Pn -T4 -sV -sC -&#45;version-all -A -&#45;osscan-guess -p- -oN /home/lizi/Desktop/myproj/PenRecon/web-backend/results/10.211.55.2/scans/_full_tcp_nmap.txt -oX /home/lizi/Desktop/myproj/PenRecon/web-backend/results/10.211.55.2/scans/xml/_full_tcp_nmap.xml 10.211.55.2" start="1750232621" startstr="Wed Jun 18 15:43:41 2025" version="7.95" xmloutputversion="1.05">
+<scaninfo type="syn" protocol="tcp" numservices="65535" services="1-65535"/>
+<verbose level="2"/>
+<debugging level="0"/>
+<taskbegin task="NSE" time="1750232622"/>
+<taskend task="NSE" time="1750232622"/>
+<taskbegin task="NSE" time="1750232622"/>
+<taskend task="NSE" time="1750232622"/>
+<taskbegin task="NSE" time="1750232622"/>
+<taskend task="NSE" time="1750232622"/>
+<taskbegin task="ARP Ping Scan" time="1750232622"/>
+<hosthint><status state="up" reason="arp-response" reason_ttl="0"/>
+<address addr="10.211.55.2" addrtype="ipv4"/>
+<address addr="8A:66:5A:01:D0:64" addrtype="mac"/>
+<hostnames>
+</hostnames>
+</hosthint>
+<taskend task="ARP Ping Scan" time="1750232622" extrainfo="1 total hosts"/>
+<taskbegin task="Parallel DNS resolution of 1 host." time="1750232622"/>
+<taskend task="Parallel DNS resolution of 1 host." time="1750232622"/>
+<taskbegin task="SYN Stealth Scan" time="1750232622"/>
+<taskprogress task="SYN Stealth Scan" time="1750232653" percent="14.72" remaining="180" etc="1750232833"/>
+<taskprogress task="SYN Stealth Scan" time="1750232683" percent="20.92" remaining="231" etc="1750232914"/>
+<taskprogress task="SYN Stealth Scan" time="1750232767" percent="40.26" remaining="216" etc="1750232982"/>
+<taskprogress task="SYN Stealth Scan" time="1750232797" percent="47.29" remaining="196" etc="1750232992"/>
+<taskprogress task="SYN Stealth Scan" time="1750232827" percent="53.94" remaining="176" etc="1750233002"/>
+<taskprogress task="SYN Stealth Scan" time="1750232857" percent="60.67" remaining="153" etc="1750233009"/>
+<taskprogress task="SYN Stealth Scan" time="1750232887" percent="67.18" remaining="130" etc="1750233016"/>
+<taskprogress task="SYN Stealth Scan" time="1750232917" percent="74.20" remaining="103" etc="1750233020"/>
+<taskprogress task="SYN Stealth Scan" time="1750232947" percent="81.70" remaining="73" etc="1750233020"/>
+<taskprogress task="SYN Stealth Scan" time="1750232989" percent="87.50" remaining="53" etc="1750233041"/>
+<taskprogress task="SYN Stealth Scan" time="1750233028" percent="92.95" remaining="31" etc="1750233059"/>
+<taskend task="SYN Stealth Scan" time="1750233086" extrainfo="65535 total ports"/>
+<taskbegin task="Service scan" time="1750233086"/>
+<taskprogress task="Service scan" time="1750233172" percent="33.33" remaining="172" etc="1750233344"/>
+<taskend task="Service scan" time="1750233269" extrainfo="3 services on 1 host"/>
+<taskbegin task="NSE" time="1750233271"/>
+<taskend task="NSE" time="1750233273"/>
+<taskbegin task="NSE" time="1750233273"/>
+<taskend task="NSE" time="1750233274"/>
+<taskbegin task="NSE" time="1750233274"/>
+<taskend task="NSE" time="1750233274"/>
+<host starttime="1750232622" endtime="1750233274"><status state="up" reason="arp-response" reason_ttl="0"/>
+<address addr="10.211.55.2" addrtype="ipv4"/>
+<address addr="8A:66:5A:01:D0:64" addrtype="mac"/>
+<hostnames>
+</hostnames>
+<ports><extraports state="closed" count="65532">
+<extrareasons reason="reset" count="65532" proto="tcp" ports="1-444,446-7889,7891-58171,58173-65535"/>
+</extraports>
+<port protocol="tcp" portid="445"><state state="open" reason="syn-ack" reason_ttl="64"/><service name="microsoft-ds" method="table" conf="3"/></port>
+<port protocol="tcp" portid="7890"><state state="open" reason="syn-ack" reason_ttl="64"/><service name="socks5" extrainfo="No authentication; connection failed" method="probed" conf="10"/><script id="socks-auth-info" output="&#xa;  No authentication&#xa;  No authentication&#xa;  No authentication"><table>
+<elem key="method">0</elem>
+<elem key="name">No authentication</elem>
+</table>
+<table>
+<elem key="method">0</elem>
+<elem key="name">No authentication</elem>
+</table>
+<table>
+<elem key="method">0</elem>
+<elem key="name">No authentication</elem>
+</table>
+</script><script id="socks-open-proxy" output="&#xa;  status: open&#xa;  versions: &#xa;    socks4&#xa;    socks5"><elem key="status">open</elem>
+<table key="versions">
+<elem>socks4</elem>
+<elem>socks5</elem>
+</table>
+</script></port>
+<port protocol="tcp" portid="58172"><state state="open" reason="syn-ack" reason_ttl="64"/></port>
+</ports>
+<os><portused state="open" proto="tcp" portid="445"/>
+<portused state="closed" proto="tcp" portid="1"/>
+<portused state="closed" proto="udp" portid="34197"/>
+<osmatch name="Apple macOS 11 (Big Sur) - 13 (Ventura) or iOS 16 (Darwin 20.6.0 - 22.4.0)" accuracy="100" line="7943">
+<osclass type="general purpose" vendor="Apple" osfamily="macOS" osgen="11.X" accuracy="100"><cpe>cpe:/o:apple:mac_os_x:11</cpe></osclass>
+<osclass type="general purpose" vendor="Apple" osfamily="macOS" osgen="12.X" accuracy="100"><cpe>cpe:/o:apple:mac_os_x:12</cpe></osclass>
+<osclass type="general purpose" vendor="Apple" osfamily="macOS" osgen="13.X" accuracy="100"><cpe>cpe:/o:apple:mac_os_x:13</cpe></osclass>
+</osmatch>
+<osfingerprint fingerprint="OS:SCAN(V=7.95%E=4%D=6/18%OT=445%CT=1%CU=34197%PV=Y%DS=1%DC=D%G=Y%M=8A665A%&#xa;OS:TM=685270BA%P=x86_64-pc-linux-gnu)SEQ(SP=106%GCD=2%ISR=10A%TI=Z%CI=RD%II&#xa;OS:=RI%TS=22)OPS(O1=M5B4NW6NNT11SLL%O2=M5B4NW6NNT11SLL%O3=M5B4NW6NNT11%O4=M&#xa;OS:5B4NW6NNT11SLL%O5=M5B4NW6NNT11SLL%O6=M5B4NNT11SLL)WIN(W1=FFFF%W2=FFFF%W3&#xa;OS:=FFFF%W4=FFFF%W5=FFFF%W6=FFFF)ECN(R=Y%DF=Y%T=40%W=FFFF%O=M5B4NW6SLL%CC=Y&#xa;OS:%Q=)T1(R=Y%DF=Y%T=40%S=O%A=S+%F=AS%RD=0%Q=)T2(R=N)T3(R=N)T4(R=Y%DF=Y%T=4&#xa;OS:0%W=0%S=A%A=Z%F=R%O=%RD=0%Q=)T5(R=Y%DF=N%T=40%W=0%S=Z%A=S+%F=AR%O=%RD=0%&#xa;OS:Q=)T6(R=Y%DF=Y%T=40%W=0%S=A%A=Z%F=R%O=%RD=0%Q=)T7(R=Y%DF=N%T=40%W=0%S=Z%&#xa;OS:A=S%F=AR%O=%RD=0%Q=)U1(R=Y%DF=N%T=40%IPL=38%UN=0%RIPL=G%RID=G%RIPCK=G%RU&#xa;OS:CK=0%RUD=G)IE(R=Y%DFI=S%T=40%CD=S)&#xa;"/>
+</os>
+<uptime seconds="6" lastboot="Wed Jun 18 15:54:28 2025"/>
+<distance value="1"/>
+<tcpsequence index="262" difficulty="Good luck!" values="DDB2B45F,51B21173,3F59E98D,25BDC629,E7840B61,41306553"/>
+<ipidsequence class="All zeros" values="0,0,0,0,0,0"/>
+<tcptssequence class="other" values="FA98E01F,86251526,E39DD99,6A33B269,E2503125,670C9873"/>
+<hostscript><script id="nbstat" output="NetBIOS name: LIZI, NetBIOS user: &lt;unknown&gt;, NetBIOS MAC: 8a:66:5a:01:d0:64 (unknown)&#xa;Names:&#xa;  LIZI&lt;00&gt;             Flags: &lt;unique&gt;&lt;active&gt;&#xa;  LIZI&lt;20&gt;             Flags: &lt;unique&gt;&lt;active&gt;&#xa;  WORKGROUP&lt;00&gt;        Flags: &lt;group&gt;&lt;active&gt;&#xa;Statistics:&#xa;  8a:66:5a:01:d0:64:00:00:00:00:00:00:00:00:00:00:00&#xa;  00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00&#xa;  00:00:00:00:00:00:00:00:00:00:00:00:00:00"/><script id="smb2-time" output="&#xa;  date: 2025-06-18T07:51:26&#xa;  start_date: N/A"><elem key="date">2025-06-18T07:51:26</elem>
+<elem key="start_date">N/A</elem>
+</script><script id="clock-skew" output="-3m06s"><elem key="median">-186</elem>
+<elem key="mean">-186</elem>
+<elem key="count">1</elem>
+<elem key="stddev">0</elem>
+</script><script id="p2p-conficker" output="&#xa;  Checking for Conficker.C or higher...&#xa;  Check 1 (port 25064/tcp): CLEAN (Couldn&apos;t connect)&#xa;  Check 2 (port 23716/tcp): CLEAN (Couldn&apos;t connect)&#xa;  Check 3 (port 25615/udp): CLEAN (Failed to receive data)&#xa;  Check 4 (port 26953/udp): CLEAN (Failed to receive data)&#xa;  0/4 checks are positive: Host is CLEAN or ports are blocked&#xa;"/><script id="smb2-security-mode" output="&#xa;  3:0:2: &#xa;    Message signing enabled and required"><table key="3:0:2">
+<elem>Message signing enabled and required</elem>
+</table>
+</script></hostscript><trace>
+<hop ttl="1" ipaddr="10.211.55.2" rtt="0.91"/>
+</trace>
+<times srtt="907" rttvar="1237" to="100000"/>
+</host>
+<taskbegin task="NSE" time="1750233274"/>
+<taskend task="NSE" time="1750233274"/>
+<taskbegin task="NSE" time="1750233274"/>
+<taskend task="NSE" time="1750233274"/>
+<taskbegin task="NSE" time="1750233274"/>
+<taskend task="NSE" time="1750233274"/>
+<runstats><finished time="1750233274" timestr="Wed Jun 18 15:54:34 2025" summary="Nmap done at Wed Jun 18 15:54:34 2025; 1 IP address (1 host up) scanned in 653.11 seconds" elapsed="653.11" exit="success"/><hosts up="1" down="0" total="1"/>
+</runstats>
+</nmaprun>

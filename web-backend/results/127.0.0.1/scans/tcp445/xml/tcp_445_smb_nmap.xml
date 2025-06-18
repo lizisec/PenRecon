@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE nmaprun>
+<?xml-stylesheet href="file:///usr/local/bin/../share/nmap/nmap.xsl" type="text/xsl"?>
+<!-- Nmap 7.95 scan initiated Sun Jun 15 16:21:49 2025 as: nmap -vv -&#45;reason -Pn -T4 -sV -p 445 &quot;-&#45;script=banner,(nbstat or smb* or ssl*) and not (brute or broadcast or dos or external or fuzzer)&quot; -oN /Users/lizi/Desktop/PenRecon/web-backend/results/localhost/scans/tcp445/tcp_445_smb_nmap.txt -oX /Users/lizi/Desktop/PenRecon/web-backend/results/localhost/scans/tcp445/xml/tcp_445_smb_nmap.xml localhost -->
+<nmaprun scanner="nmap" args="nmap -vv -&#45;reason -Pn -T4 -sV -p 445 &quot;-&#45;script=banner,(nbstat or smb* or ssl*) and not (brute or broadcast or dos or external or fuzzer)&quot; -oN /Users/lizi/Desktop/PenRecon/web-backend/results/localhost/scans/tcp445/tcp_445_smb_nmap.txt -oX /Users/lizi/Desktop/PenRecon/web-backend/results/localhost/scans/tcp445/xml/tcp_445_smb_nmap.xml localhost" start="1749975709" startstr="Sun Jun 15 16:21:49 2025" version="7.95" xmloutputversion="1.05">
+<scaninfo type="connect" protocol="tcp" numservices="1" services="445"/>
+<verbose level="2"/>
+<debugging level="0"/>
+<taskbegin task="NSE" time="1749975709"/>
+<taskend task="NSE" time="1749975709"/>
+<taskbegin task="NSE" time="1749975709"/>
+<taskend task="NSE" time="1749975709"/>
+<taskbegin task="NSE" time="1749975709"/>
+<taskend task="NSE" time="1749975709"/>
+<taskbegin task="Connect Scan" time="1749975709"/>
+<taskend task="Connect Scan" time="1749975709" extrainfo="1 total ports"/>
+<taskbegin task="Service scan" time="1749975709"/>
+<taskend task="Service scan" time="1749975735" extrainfo="1 service on 1 host"/>
+<taskbegin task="NSE" time="1749975735"/>
+<taskprogress task="NSE" time="1749975766" percent="97.22" remaining="1" etc="1749975767"/>
+<taskend task="NSE" time="1749975769"/>
+<taskbegin task="NSE" time="1749975769"/>
+<taskend task="NSE" time="1749975770"/>
+<taskbegin task="NSE" time="1749975770"/>
+<taskend task="NSE" time="1749975770"/>
+<host starttime="1749975709" endtime="1749975770"><status state="up" reason="user-set" reason_ttl="0"/>
+<address addr="127.0.0.1" addrtype="ipv4"/>
+<hostnames>
+<hostname name="localhost" type="user"/>
+<hostname name="localhost" type="PTR"/>
+</hostnames>
+<ports><port protocol="tcp" portid="445"><state state="open" reason="syn-ack" reason_ttl="0"/><service name="microsoft-ds" method="table" conf="3"/><script id="smb-enum-services" output="ERROR: Script execution failed (use -d to debug)"/></port>
+</ports>
+<hostscript><script id="smb2-time" output="&#xa;  date: 2025-06-15T08:21:17&#xa;  start_date: N/A"><elem key="date">2025-06-15T08:21:17</elem>
+<elem key="start_date">N/A</elem>
+</script><script id="smb2-capabilities" output="&#xa;  2:0:2: &#xa;    All capabilities are disabled&#xa;  2:1:0: &#xa;    Leasing&#xa;    Multi-credit operations&#xa;  3:0:0: &#xa;    Leasing&#xa;    Multi-credit operations&#xa;  3:0:2: &#xa;    Leasing&#xa;    Multi-credit operations"><table key="2:0:2">
+<elem>All capabilities are disabled</elem>
+</table>
+<table key="2:1:0">
+<elem>Leasing</elem>
+<elem>Multi-credit operations</elem>
+</table>
+<table key="3:0:0">
+<elem>Leasing</elem>
+<elem>Multi-credit operations</elem>
+</table>
+<table key="3:0:2">
+<elem>Leasing</elem>
+<elem>Multi-credit operations</elem>
+</table>
+</script><script id="smb-protocols" output="&#xa;  dialects: &#xa;    2:0:2&#xa;    2:1:0&#xa;    3:0:0&#xa;    3:0:2"><table key="dialects">
+<elem>2:0:2</elem>
+<elem>2:1:0</elem>
+<elem>3:0:0</elem>
+<elem>3:0:2</elem>
+</table>
+</script><script id="smb-vuln-ms10-061" output="Could not negotiate a connection:SMB: Failed to receive bytes: EOF">false</script><script id="smb-print-text" output="false">false</script><script id="smb-psexec" output="Can&apos;t find the service file: nmap_service.exe (or nmap_service).&#xa;Due to false positives in antivirus software, this module is no&#xa;longer included by default. Please download it from&#xa;https://nmap.org/psexec/nmap_service.exe&#xa;and place it in nselib/data/psexec/ under the Nmap DATADIR.&#xa;"/><script id="smb2-security-mode" output="&#xa;  3:0:2: &#xa;    Message signing enabled and required"><table key="3:0:2">
+<elem>Message signing enabled and required</elem>
+</table>
+</script><script id="smb-mbenum" output="&#xa;  ERROR: Failed to connect to browser service: Could not negotiate a connection:SMB: Failed to receive bytes: EOF"/></hostscript><times srtt="116" rttvar="5000" to="100000"/>
+</host>
+<taskbegin task="NSE" time="1749975770"/>
+<taskend task="NSE" time="1749975770"/>
+<taskbegin task="NSE" time="1749975770"/>
+<taskend task="NSE" time="1749975770"/>
+<taskbegin task="NSE" time="1749975770"/>
+<taskend task="NSE" time="1749975770"/>
+<runstats><finished time="1749975770" timestr="Sun Jun 15 16:22:50 2025" summary="Nmap done at Sun Jun 15 16:22:50 2025; 1 IP address (1 host up) scanned in 61.22 seconds" elapsed="61.22" exit="success"/><hosts up="1" down="0" total="1"/>
+</runstats>
+</nmaprun>

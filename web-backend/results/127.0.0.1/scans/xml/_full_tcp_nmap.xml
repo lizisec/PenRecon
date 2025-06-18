@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE nmaprun>
+<?xml-stylesheet href="file:///usr/local/bin/../share/nmap/nmap.xsl" type="text/xsl"?>
+<!-- Nmap 7.95 scan initiated Wed Jun 18 13:34:21 2025 as: nmap -vv -&#45;reason -Pn -T4 -sV -sC -&#45;version-all -A -&#45;osscan-guess -p- -oN /Users/lizi/Desktop/myproj/PenRecon/web-backend/results/127.0.0.1/scans/_full_tcp_nmap.txt -oX /Users/lizi/Desktop/myproj/PenRecon/web-backend/results/127.0.0.1/scans/xml/_full_tcp_nmap.xml 127.0.0.1 -->
+<nmaprun scanner="nmap" args="nmap -vv -&#45;reason -Pn -T4 -sV -sC -&#45;version-all -A -&#45;osscan-guess -p- -oN /Users/lizi/Desktop/myproj/PenRecon/web-backend/results/127.0.0.1/scans/_full_tcp_nmap.txt -oX /Users/lizi/Desktop/myproj/PenRecon/web-backend/results/127.0.0.1/scans/xml/_full_tcp_nmap.xml 127.0.0.1" start="1750224861" startstr="Wed Jun 18 13:34:21 2025" version="7.95" xmloutputversion="1.05">
+<scaninfo type="connect" protocol="tcp" numservices="65535" services="1-65535"/>
+<verbose level="2"/>
+<debugging level="0"/>
+<taskbegin task="NSE" time="1750224861"/>
+<taskend task="NSE" time="1750224861"/>
+<taskbegin task="NSE" time="1750224861"/>
+<taskend task="NSE" time="1750224861"/>
+<taskbegin task="NSE" time="1750224861"/>
+<taskend task="NSE" time="1750224861"/>
+<taskbegin task="Connect Scan" time="1750224861"/>
+<taskend task="Connect Scan" time="1750224871" extrainfo="65535 total ports"/>
+<taskbegin task="Service scan" time="1750224871"/>

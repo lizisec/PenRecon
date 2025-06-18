@@ -1,0 +1,218 @@
+```bash
+sslscan --show-certificate --no-colour localhost:4001 2>&1
+```
+
+[/Users/lizi/Desktop/PenRecon/web-backend/results/localhost/scans/tcp4001/tcp_4001_sslscan.html](file:///Users/lizi/Desktop/PenRecon/web-backend/results/localhost/scans/tcp4001/tcp_4001_sslscan.html):
+
+```
+ERROR: Could not open a connection to host localhost (::1) on port 4001 (connect: Connection refused).
+Version: 2.1.6
+OpenSSL 3.5.0 8 Apr 2025
+
+Connected to 127.0.0.1
+
+Testing SSL server localhost on port 4001 using SNI name localhost
+
+  SSL/TLS Protocols:
+SSLv2     disabled
+SSLv3     disabled
+TLSv1.0   disabled
+TLSv1.1   disabled
+TLSv1.2   enabled
+TLSv1.3   enabled
+
+  TLS Fallback SCSV:
+Server supports TLS Fallback SCSV
+
+  TLS renegotiation:
+Session renegotiation not supported
+
+  TLS Compression:
+OpenSSL version does not support compression
+Rebuild with zlib1g-dev package for zlib support
+
+  Heartbleed:
+TLSv1.3 not vulnerable to heartbleed
+TLSv1.2 not vulnerable to heartbleed
+
+  Supported Server Cipher(s):
+Preferred TLSv1.3  128 bits  TLS_AES_128_GCM_SHA256        Curve 25519 DHE 253
+Accepted  TLSv1.3  256 bits  TLS_AES_256_GCM_SHA384        Curve 25519 DHE 253
+Accepted  TLSv1.3  256 bits  TLS_CHACHA20_POLY1305_SHA256  Curve 25519 DHE 253
+Preferred TLSv1.2  128 bits  ECDHE-RSA-AES128-GCM-SHA256   Curve 25519 DHE 253
+Accepted  TLSv1.2  256 bits  ECDHE-RSA-AES256-GCM-SHA384   Curve 25519 DHE 253
+Accepted  TLSv1.2  256 bits  ECDHE-RSA-CHACHA20-POLY1305   Curve 25519 DHE 253
+Accepted  TLSv1.2  128 bits  ECDHE-RSA-AES128-SHA          Curve 25519 DHE 253
+Accepted  TLSv1.2  256 bits  ECDHE-RSA-AES256-SHA          Curve 25519 DHE 253
+Accepted  TLSv1.2  128 bits  AES128-GCM-SHA256
+Accepted  TLSv1.2  256 bits  AES256-GCM-SHA384
+Accepted  TLSv1.2  128 bits  AES128-SHA
+Accepted  TLSv1.2  256 bits  AES256-SHA
+Accepted  TLSv1.2  112 bits  TLS_ECDHE_RSA_WITH_3DES_EDE_CBC_SHA
+Accepted  TLSv1.2  112 bits  TLS_RSA_WITH_3DES_EDE_CBC_SHA
+
+  Server Key Exchange Group(s):
+TLSv1.3  128 bits  secp256r1 (NIST P-256)
+TLSv1.3  192 bits  secp384r1 (NIST P-384)
+TLSv1.3  260 bits  secp521r1 (NIST P-521)
+TLSv1.3  128 bits  x25519
+TLSv1.2  128 bits  secp256r1 (NIST P-256)
+TLSv1.2  192 bits  secp384r1 (NIST P-384)
+TLSv1.2  260 bits  secp521r1 (NIST P-521)
+TLSv1.2  128 bits  x25519
+
+  SSL Certificate:
+    Certificate blob:
+-----BEGIN CERTIFICATE-----
+MIIITTCCBjWgAwIBAgIQBsaOEw+pe7gmor+3G0F51jANBgkqhkiG9w0BAQsFADBq
+MQswCQYDVQQGEwJVUzEXMBUGA1UEChMORGlnaUNlcnQsIEluYy4xQjBABgNVBAMT
+OURpZ2lDZXJ0IFNlY3VyZSBTaXRlIE9WIEcyIFRMUyBDTiBSU0E0MDk2IFNIQTI1
+NiAyMDIyIENBMTAeFw0yNTA1MTYwMDAwMDBaFw0yNjA2MTYyMzU5NTlaMIGdMQsw
+CQYDVQQGEwJDTjEbMBkGA1UECBMSR3Vhbmdkb25nIFByb3ZpbmNlMREwDwYDVQQH
+EwhTaGVuemhlbjE6MDgGA1UEChMxU2hlbnpoZW4gVGVuY2VudCBDb21wdXRlciBT
+eXN0ZW1zIENvbXBhbnkgTGltaXRlZDEiMCAGA1UEAxMZbG9jYWxob3N0LnB0bG9n
+aW4yLnFxLmNvbTCCASIwDQYJKoZIhvcNAQEBBQADggEPADCCAQoCggEBAMVUn66D
+pqds9pYChwVaPiXeCeC5tdSNewCJilsBJygFFDFYH6gCBui+5H9j0HaZ5Obofe70
+5QGJBqeZCJDELDYh3+lAyPqx+858eMvy2Kucp1RcPCG4qDAhRaOoRafaxmDFiemQ
+2vZ4wqJ9q0Zxnm3iT5otZGgKehnQByGZBKaYchFGA0Tsz0hoX19bfT7Fssh2nFsm
+8/Mil9t+65fpBqq+YpKpd/AlNXI2yrwBl7sp18KfB7aPHFLqIOzM/87k+jEUXcUS
+gnIRNih/c103TD+pg34VoHJHZAWy7POE90ODs9XcCeURP1hJDd/XC6nKJwEECLcv
+7eV5rdL1zsrBbg8CAwEAAaOCA7kwggO1MB8GA1UdIwQYMBaAFCsjFoEbR4mKkHrs
+6DLUbI5y+c4lMB0GA1UdDgQWBBSfajRtiSQox5N9juvvIoa4eyESqjCBggYDVR0R
+BHsweYIZbG9jYWxob3N0LnB0bG9naW4yLnFxLmNvbYIebG9jYWxob3N0LnB0bG9n
+aW4yLnRlbmNlbnQuY29tgh1sb2NhbGhvc3QucHRsb2dpbjIudGVucGF5LmNvbYId
+bG9jYWxob3N0LnB0bG9naW4yLndlaXl1bi5jb20wPgYDVR0gBDcwNTAzBgZngQwB
+AgIwKTAnBggrBgEFBQcCARYbaHR0cDovL3d3dy5kaWdpY2VydC5jb20vQ1BTMA4G
+A1UdDwEB/wQEAwIFoDAdBgNVHSUEFjAUBggrBgEFBQcDAQYIKwYBBQUHAwIwWwYD
+VR0fBFQwUjBQoE6gTIZKaHR0cDovL2NybC5kaWdpY2VydC5jbi9EaWdpQ2VydFNl
+Y3VyZVNpdGVPVkcyVExTQ05SU0E0MDk2U0hBMjU2MjAyMkNBMS5jcmwwgZEGCCsG
+AQUFBwEBBIGEMIGBMCMGCCsGAQUFBzABhhdodHRwOi8vb2NzcC5kaWdpY2VydC5j
+bjBaBggrBgEFBQcwAoZOaHR0cDovL2NhY2VydHMuZGlnaWNlcnQuY24vRGlnaUNl
+cnRTZWN1cmVTaXRlT1ZHMlRMU0NOUlNBNDA5NlNIQTI1NjIwMjJDQTEuY3J0MAwG
+A1UdEwEB/wQCMAAwggF+BgorBgEEAdZ5AgQCBIIBbgSCAWoBaAB2AA5XlLzzrqk+
+MxssmQez95Dfm8I9cTIl3SGpJaxhxU4hAAABltgMm2EAAAQDAEcwRQIgYD2OOZf8
+rSwgrkiwu1K2XFwhSJKCYTi9EPCxuUBXoxcCIQD3ZpQEvbYJoby+Pmw6glIqt7Qo
+HwLK9n6zmfnc+sdwVgB1AGQRxGykEuyniRyiAi4AvKtPKAfUHjUnq+r+1QPJfc3w
+AAABltgMm48AAAQDAEYwRAIfSjH0cEx+wD3Ill2ATKmqHNCexk09PgxEaMxWuIdk
+ewIhAM3NCqx/eOJW4mK/3F2mYeL6fK48LwW7BaeuCWnF1XLpAHcASZybad4dfOz8
+Nt7Nh2SmuFuvCoeAGdFVUvvp6ynd+MMAAAGW2AybnAAABAMASDBGAiEAvC6WN5C5
+sefDIblHL9zdQ+Rq5+kPvr5PqnQPmWRCzTICIQD/OovsOzW/+PEEhNx6Lthp0wLb
+NWgXFPfCQATqAuaPuTANBgkqhkiG9w0BAQsFAAOCAgEAjSJFXm9gcJ+7wq0+66Wn
+V6BKuMN6Cygi0YlK/t7i+pOcIu7mtqO/EZo5E2BRYqdiYRprVEZLe78j4hSjL7UV
+U0QCqUlhBumhIYzfkir0d6ErC+H1PTBhKA0KIk+JZUm5unTfCr14fJZ/uSjB/d16
+S5EQxNa3FAv2hpXLsMZCFkxQz8m9RNji0TeTZ85wy5Y0EChzSObVPjgHd6tTubJY
+J/4kKsI4bNdhkP0g3LyO4yEIrf4U2DKRV33GGflOVSX3dYp+XxUF5fgzVuw55xcf
+hlnOaiUmkr0JBmHOX0lOwf5Lp4s/l2KleFLxSszXcu9a9wKyeOcz9G2mwMn02jb8
+S10BBwQyFfGu3eKGT+NyJJs3+ZrKeFIV/zmgr9bDZOx6kiKScM8AfoMXuhtEHqgD
+yHgVuUGEEI32MCBOpBiBFER0++CUR5tdW7+bw163gBFb083Ddvc4QnnKWX9GQ+Bo
+WG+UsVHva2LF1J4cE0ufdAIuQ2i5CBGzo80MUnil4o+yMpzIdfFD3C+T16cy6H2N
+gGF3CIcfNLgy2acontUsLCaM182No3+4deelacqqqQJ7FM5SBil9wGCF2JNoXUs4
+/cd2f6FXb6Er+Vo4FfhoI1ieLp+MqkIG+Jd7rZN3fDCilo9H9Lxnpt65mbP/aIES
+SG5Z6MBpAvhMggOgeubO6zQ=
+-----END CERTIFICATE-----
+    Version: 2
+    Serial Number: 06:c6:8e:13:0f:a9:7b:b8:26:a2:bf:b7:1b:41:79:d6
+    Signature Algorithm: sha256WithRSAEncryption
+    Issuer: /C=US/O=DigiCert, Inc./CN=DigiCert Secure Site OV G2 TLS CN RSA4096 SHA256 2022 CA1
+    Not valid before: May 16 00:00:00 2025 GMT
+    Not valid after: Jun 16 23:59:59 2026 GMT
+    Subject: /C=CN/ST=Guangdong Province/L=Shenzhen/O=Shenzhen Tencent Computer Systems Company Limited/CN=localhost.ptlogin2.qq.com
+    Public Key Algorithm: NULL
+    RSA Public Key: (2048 bit)
+      RSA Public-Key: (2048 bit)
+      Modulus:
+          00:c5:54:9f:ae:83:a6:a7:6c:f6:96:02:87:05:5a:
+          3e:25:de:09:e0:b9:b5:d4:8d:7b:00:89:8a:5b:01:
+          27:28:05:14:31:58:1f:a8:02:06:e8:be:e4:7f:63:
+          d0:76:99:e4:e6:e8:7d:ee:f4:e5:01:89:06:a7:99:
+          08:90:c4:2c:36:21:df:e9:40:c8:fa:b1:fb:ce:7c:
+          78:cb:f2:d8:ab:9c:a7:54:5c:3c:21:b8:a8:30:21:
+          45:a3:a8:45:a7:da:c6:60:c5:89:e9:90:da:f6:78:
+          c2:a2:7d:ab:46:71:9e:6d:e2:4f:9a:2d:64:68:0a:
+          7a:19:d0:07:21:99:04:a6:98:72:11:46:03:44:ec:
+          cf:48:68:5f:5f:5b:7d:3e:c5:b2:c8:76:9c:5b:26:
+          f3:f3:22:97:db:7e:eb:97:e9:06:aa:be:62:92:a9:
+          77:f0:25:35:72:36:ca:bc:01:97:bb:29:d7:c2:9f:
+          07:b6:8f:1c:52:ea:20:ec:cc:ff:ce:e4:fa:31:14:
+          5d:c5:12:82:72:11:36:28:7f:73:5d:37:4c:3f:a9:
+          83:7e:15:a0:72:47:64:05:b2:ec:f3:84:f7:43:83:
+          b3:d5:dc:09:e5:11:3f:58:49:0d:df:d7:0b:a9:ca:
+          27:01:04:08:b7:2f:ed:e5:79:ad:d2:f5:ce:ca:c1:
+          6e:0f
+      Exponent: 65537 (0x10001)
+    X509v3 Extensions:
+      X509v3 Authority Key Identifier:
+        2B:23:16:81:1B:47:89:8A:90:7A:EC:E8:32:D4:6C:8E:72:F9:CE:25
+      X509v3 Subject Key Identifier:
+        9F:6A:34:6D:89:24:28:C7:93:7D:8E:EB:EF:22:86:B8:7B:21:12:AA
+      X509v3 Subject Alternative Name:
+        DNS:localhost.ptlogin2.qq.com, DNS:localhost.ptlogin2.tencent.com, DNS:localhost.ptlogin2.tenpay.com, DNS:localhost.ptlogin2.weiyun.com
+      X509v3 Certificate Policies:
+        Policy: 2.23.140.1.2.2
+          CPS: http://www.digicert.com/CPS
+      X509v3 Key Usage: critical
+        Digital Signature, Key Encipherment
+      X509v3 Extended Key Usage:
+        TLS Web Server Authentication, TLS Web Client Authentication
+      X509v3 CRL Distribution Points:
+        Full Name:
+          URI:http://crl.digicert.cn/DigiCertSecureSiteOVG2TLSCNRSA4096SHA2562022CA1.crl
+
+      Authority Information Access:
+        OCSP - URI:http://ocsp.digicert.cn
+        CA Issuers - URI:http://cacerts.digicert.cn/DigiCertSecureSiteOVG2TLSCNRSA4096SHA2562022CA1.crt
+      X509v3 Basic Constraints: critical
+        CA:FALSE
+      CT Precertificate SCTs:
+        Signed Certificate Timestamp:
+            Version   : v1 (0x0)
+            Log ID    : 0E:57:94:BC:F3:AE:A9:3E:33:1B:2C:99:07:B3:F7:90:
+                        DF:9B:C2:3D:71:32:25:DD:21:A9:25:AC:61:C5:4E:21
+            Timestamp : May 16 07:43:47.041 2025 GMT
+            Extensions: none
+            Signature : ecdsa-with-SHA256
+                        30:45:02:20:60:3D:8E:39:97:FC:AD:2C:20:AE:48:B0:
+                        BB:52:B6:5C:5C:21:48:92:82:61:38:BD:10:F0:B1:B9:
+                        40:57:A3:17:02:21:00:F7:66:94:04:BD:B6:09:A1:BC:
+                        BE:3E:6C:3A:82:52:2A:B7:B4:28:1F:02:CA:F6:7E:B3:
+                        99:F9:DC:FA:C7:70:56
+        Signed Certificate Timestamp:
+            Version   : v1 (0x0)
+            Log ID    : 64:11:C4:6C:A4:12:EC:A7:89:1C:A2:02:2E:00:BC:AB:
+                        4F:28:07:D4:1E:35:27:AB:EA:FE:D5:03:C9:7D:CD:F0
+            Timestamp : May 16 07:43:47.087 2025 GMT
+            Extensions: none
+            Signature : ecdsa-with-SHA256
+                        30:44:02:1F:4A:31:F4:70:4C:7E:C0:3D:C8:96:5D:80:
+                        4C:A9:AA:1C:D0:9E:C6:4D:3D:3E:0C:44:68:CC:56:B8:
+                        87:64:7B:02:21:00:CD:CD:0A:AC:7F:78:E2:56:E2:62:
+                        BF:DC:5D:A6:61:E2:FA:7C:AE:3C:2F:05:BB:05:A7:AE:
+                        09:69:C5:D5:72:E9
+        Signed Certificate Timestamp:
+            Version   : v1 (0x0)
+            Log ID    : 49:9C:9B:69:DE:1D:7C:EC:FC:36:DE:CD:87:64:A6:B8:
+                        5B:AF:0A:87:80:19:D1:55:52:FB:E9:EB:29:DD:F8:C3
+            Timestamp : May 16 07:43:47.100 2025 GMT
+            Extensions: none
+            Signature : ecdsa-with-SHA256
+                        30:46:02:21:00:BC:2E:96:37:90:B9:B1:E7:C3:21:B9:
+                        47:2F:DC:DD:43:E4:6A:E7:E9:0F:BE:BE:4F:AA:74:0F:
+                        99:64:42:CD:32:02:21:00:FF:3A:8B:EC:3B:35:BF:F8:
+                        F1:04:84:DC:7A:2E:D8:69:D3:02:DB:35:68:17:14:F7:
+                        C2:40:04:EA:02:E6:8F:B9
+  Verify m:
+    unable to get local issuer certificate
+
+  SSL Certificate:
+Signature Algorithm: sha256WithRSAEncryption
+RSA Key Strength:    2048
+
+Subject:  localhost.ptlogin2.qq.com
+Altnames: DNS:localhost.ptlogin2.qq.com, DNS:localhost.ptlogin2.tencent.com, DNS:localhost.ptlogin2.tenpay.com, DNS:localhost.ptlogin2.weiyun.com
+Issuer:   DigiCert Secure Site OV G2 TLS CN RSA4096 SHA256 2022 CA1
+
+Not valid before: May 16 00:00:00 2025 GMT
+Not valid after:  Jun 16 23:59:59 2026 GMT
+
+
+```

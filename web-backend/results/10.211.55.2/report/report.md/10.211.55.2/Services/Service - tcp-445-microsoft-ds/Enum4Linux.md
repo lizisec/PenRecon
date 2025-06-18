@@ -1,0 +1,103 @@
+```bash
+enum4linux-ng -A -d -v 10.211.55.2 2>&1
+```
+
+[/home/lizi/Desktop/myproj/PenRecon/web-backend/results/10.211.55.2/scans/tcp445/enum4linux-ng.txt](file:///home/lizi/Desktop/myproj/PenRecon/web-backend/results/10.211.55.2/scans/tcp445/enum4linux-ng.txt):
+
+```
+[92mENUM4LINUX - next generation (v1.3.4)[0m
+
+ ==========================
+|    Target Information    |
+ ==========================
+[94m[*] Target ........... 10.211.55.2[0m
+[94m[*] Username ......... ''[0m
+[94m[*] Random Username .. 'oivmfvsg'[0m
+[94m[*] Password ......... ''[0m
+[94m[*] Timeout .......... 5 second(s)[0m
+
+ ====================================
+|    Listener Scan on 10.211.55.2    |
+ ====================================
+[94m[*] Checking LDAP[0m
+[91m[-] Could not connect to LDAP on 389/tcp: connection refused[0m
+[94m[*] Checking LDAPS[0m
+[91m[-] Could not connect to LDAPS on 636/tcp: connection refused[0m
+[94m[*] Checking SMB[0m
+[92m[+] SMB is accessible on 445/tcp[0m
+[94m[*] Checking SMB over NetBIOS[0m
+[91m[-] Could not connect to SMB over NetBIOS on 139/tcp: connection refused[0m
+
+ ==========================================================
+|    NetBIOS Names and Workgroup/Domain for 10.211.55.2    |
+ ==========================================================
+[V] Trying to get NetBIOS names information, running command: nmblookup -s /tmp/tmpmhdgpwfl -A 10.211.55.2
+[92m[+] Got domain/workgroup name: WORKGROUP[0m
+[92m[+] Full NetBIOS names information:
+- LIZI            <00> -         H <ACTIVE>  Workstation Service
+- LIZI            <20> -         H <ACTIVE>  File Server Service
+- WORKGROUP       <00> - <GROUP> H <ACTIVE>  Domain/Workgroup Name
+- MAC Address = 8A-66-5A-01-D0-64[0m
+
+ ========================================
+|    SMB Dialect Check on 10.211.55.2    |
+ ========================================
+[94m[*] Trying on 445/tcp[0m
+[92m[+] Supported dialects and settings:
+Supported dialects:
+  SMB 1.0: false
+  SMB 2.02: true
+  SMB 2.1: true
+  SMB 3.0: true
+  SMB 3.1.1: false
+Preferred dialect: SMB 3.0
+SMB1 only: false
+SMB signing required: true[0m
+
+ ==========================================================
+|    Domain Information via SMB session for 10.211.55.2    |
+ ==========================================================
+[94m[*] Enumerating via unauthenticated SMB session on 445/tcp[0m
+[92m[+] Found domain information via SMB
+NetBIOS computer name: LIZI
+NetBIOS domain name: ''
+DNS domain: local
+FQDN: lizi.local
+Derived membership: workgroup member
+Derived domain: unknown[0m
+
+ ========================================
+|    RPC Session Check on 10.211.55.2    |
+ ========================================
+[94m[*] Check for null session[0m
+[V] Attempting to make session, running command: smbclient -W WORKGROUP -U % -s /tmp/tmpmhdgpwfl -t 5 -c help '//10.211.55.2/ipc$'
+[91m[-] Could not establish null session: STATUS_LOGON_FAILURE[0m
+[94m[*] Check for random user[0m
+[V] Attempting to make session, running command: smbclient -W WORKGROUP -U oivmfvsg% -s /tmp/tmpmhdgpwfl -t 5 -c help '//10.211.55.2/ipc$'
+[91m[-] Could not establish random user session: STATUS_LOGON_FAILURE[0m
+[91m[-] Sessions failed, neither null nor user sessions were possible[0m
+
+ ==============================================
+|    OS Information via RPC for 10.211.55.2    |
+ ==============================================
+[94m[*] Enumerating via unauthenticated SMB session on 445/tcp[0m
+[92m[+] Found OS information via SMB[0m
+[94m[*] Enumerating via 'srvinfo'[0m
+[91m[-] Skipping 'srvinfo' run, not possible with provided credentials[0m
+[92m[+] After merging OS information we have the following result:
+OS: Windows 7, Windows Server 2008 R2
+OS version: '6.1'
+OS release: ''
+OS build: '7600'
+Native OS: not supported
+Native LAN manager: not supported
+Platform id: null
+Server type: null
+Server type string: null[0m
+
+[93m[!] Aborting remainder of tests since sessions failed, rerun with valid credentials[0m
+
+Completed after 0.23 seconds
+
+
+```

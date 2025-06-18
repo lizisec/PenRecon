@@ -1,0 +1,12 @@
+[*] microsoft-ds found on tcp/445.
+
+
+
+[*] socks5 found on tcp/7890.
+
+
+
+[*] unknown found on tcp/58172.
+
+
+

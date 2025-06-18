@@ -1,0 +1,1 @@
+# Nmap 7.95 scan initiated Wed Jun 18 13:34:21 2025 as: nmap -vv --reason -Pn -T4 -sV -sC --version-all -A --osscan-guess -oN /Users/lizi/Desktop/myproj/PenRecon/web-backend/results/127.0.0.1/scans/_quick_tcp_nmap.txt -oX /Users/lizi/Desktop/myproj/PenRecon/web-backend/results/127.0.0.1/scans/xml/_quick_tcp_nmap.xml 127.0.0.1

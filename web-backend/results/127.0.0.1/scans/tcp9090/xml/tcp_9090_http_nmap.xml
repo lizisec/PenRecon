@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE nmaprun>
+<?xml-stylesheet href="file:///usr/local/bin/../share/nmap/nmap.xsl" type="text/xsl"?>
+<!-- Nmap 7.95 scan initiated Sun Jun 15 16:21:49 2025 as: nmap -vv -&#45;reason -Pn -T4 -sV -p 9090 &quot;-&#45;script=banner,(http* or ssl*) and not (brute or broadcast or dos or external or http-slowloris* or fuzzer)&quot; -oN /Users/lizi/Desktop/PenRecon/web-backend/results/localhost/scans/tcp9090/tcp_9090_http_nmap.txt -oX /Users/lizi/Desktop/PenRecon/web-backend/results/localhost/scans/tcp9090/xml/tcp_9090_http_nmap.xml localhost -->
+<nmaprun scanner="nmap" args="nmap -vv -&#45;reason -Pn -T4 -sV -p 9090 &quot;-&#45;script=banner,(http* or ssl*) and not (brute or broadcast or dos or external or http-slowloris* or fuzzer)&quot; -oN /Users/lizi/Desktop/PenRecon/web-backend/results/localhost/scans/tcp9090/tcp_9090_http_nmap.txt -oX /Users/lizi/Desktop/PenRecon/web-backend/results/localhost/scans/tcp9090/xml/tcp_9090_http_nmap.xml localhost" start="1749975709" startstr="Sun Jun 15 16:21:49 2025" version="7.95" xmloutputversion="1.05">
+<scaninfo type="connect" protocol="tcp" numservices="1" services="9090"/>
+<verbose level="2"/>
+<debugging level="0"/>
+<taskbegin task="NSE" time="1749975709"/>
+<taskend task="NSE" time="1749975709"/>
+<taskbegin task="NSE" time="1749975709"/>
+<taskend task="NSE" time="1749975709"/>
+<taskbegin task="NSE" time="1749975709"/>
+<taskend task="NSE" time="1749975709"/>
+<taskbegin task="Connect Scan" time="1749975709"/>
+<taskend task="Connect Scan" time="1749975709" extrainfo="1 total ports"/>
+<taskbegin task="Service scan" time="1749975710"/>
+<taskend task="Service scan" time="1749975751" extrainfo="1 service on 1 host"/>
+<taskbegin task="NSE" time="1749975751"/>
+<taskprogress task="NSE" time="1749975782" percent="99.68" remaining="1" etc="1749975782"/>
+<taskend task="NSE" time="1749975783"/>
+<taskbegin task="NSE" time="1749975783"/>
+<taskend task="NSE" time="1749975783"/>
+<taskbegin task="NSE" time="1749975783"/>
+<taskend task="NSE" time="1749975783"/>
+<host starttime="1749975709" endtime="1749975783"><status state="up" reason="user-set" reason_ttl="0"/>
+<address addr="127.0.0.1" addrtype="ipv4"/>
+<hostnames>
+<hostname name="localhost" type="user"/>
+<hostname name="localhost" type="PTR"/>
+</hostnames>
+<ports><port protocol="tcp" portid="9090"><state state="open" reason="syn-ack" reason_ttl="0"/><service name="http" product="Golang net/http server" servicefp="SF-Port9090-TCP:V=7.95%I=7%D=6/15%Time=684E82A4%P=x86_64-apple-darwin23.6.0%r(GetRequest,9F,&quot;HTTP/1\.0\x20401\x20Unauthorized\r\nContent-Type:\x20application/json\r\nVary:\x20Origin\r\nDate:\x20Sun,\x2015\x20Jun\x202025\x2008:21:56\x20GMT\r\nContent-Length:\x2027\r\n\r\n{\&quot;message\&quot;:\&quot;Unauthorized\&quot;}\n&quot;)%r(SqueezeCenter_CLI,67,&quot;HTTP/1\.1\x20400\x20Bad\x20Request\r\nContent-Type:\x20text/plain;\x20charset=utf-8\r\nConnection:\x20close\r\n\r\n400\x20Bad\x20Request&quot;)%r(GenericLines,67,&quot;HTTP/1\.1\x20400\x20Bad\x20Request\r\nContent-Type:\x20text/plain;\x20charset=utf-8\r\nConnection:\x20close\r\n\r\n400\x20Bad\x20Request&quot;)%r(HTTPOptions,75,&quot;HTTP/1\.0\x20405\x20Method\x20Not\x20Allowed\r\nAllow:\x20GET\r\nVary:\x20Origin\r\nDate:\x20Sun,\x2015\x20Jun\x202025\x2008:22:11\x20GMT\r\nContent-Length:\x200\r\n\r\n&quot;)%r(RTSPRequest,67,&quot;HTTP/1\.1\x20400\x20Bad\x20Request\r\nContent-Type:\x20text/plain;\x20charset=utf-8\r\nConnection:\x20close\r\n\r\n400\x20Bad\x20Request&quot;)%r(Help,67,&quot;HTTP/1\.1\x20400\x20Bad\x20Request\r\nContent-Type:\x20text/plain;\x20charset=utf-8\r\nConnection:\x20close\r\n\r\n400\x20Bad\x20Request&quot;)%r(SSLSessionReq,67,&quot;HTTP/1\.1\x20400\x20Bad\x20Request\r\nContent-Type:\x20text/plain;\x20charset=utf-8\r\nConnection:\x20close\r\n\r\n400\x20Bad\x20Request&quot;)%r(FourOhFourRequest,BE,&quot;HTTP/1\.0\x20404\x20Not\x20Found\r\nContent-Type:\x20text/plain;\x20charset=utf-8\r\nVary:\x20Origin\r\nX-Content-Type-Options:\x20nosniff\r\nDate:\x20Sun,\x2015\x20Jun\x202025\x2008:22:26\x20GMT\r\nContent-Length:\x2019\r\n\r\n404\x20page\x20not\x20found\n&quot;)%r(LPDString,67,&quot;HTTP/1\.1\x20400\x20Bad\x20Request\r\nContent-Type:\x20text/plain;\x20charset=utf-8\r\nConnection:\x20close\r\n\r\n400\x20Bad\x20Request&quot;)%r(SIPOptions,67,&quot;HTTP/1\.1\x20400\x20Bad\x20Request\r\nContent-Type:\x20text/plain;\x20charset=utf-8\r\nConnection:\x20close\r\n\r\n400\x20Bad\x20Request&quot;)%r(Socks5,67,&quot;HTTP/1\.1\x20400\x20Bad\x20Request\r\nContent-Type:\x20text/plain;\x20charset=utf-8\r\nConnection:\x20close\r\n\r\n400\x20Bad\x20Request&quot;)%r(OfficeScan,A3,&quot;HTTP/1\.1\x20400\x20Bad\x20Request:\x20missing\x20required\x20Host\x20header\r\nContent-Type:\x20text/plain;\x20charset=utf-8\r\nConnection:\x20close\r\n\r\n400\x20Bad\x20Request:\x20missing\x20required\x20Host\x20header&quot;);" method="probed" conf="10"><cpe>cpe:/a:golang:go</cpe></service><script id="http-fetch" output="Please enter the complete path of the directory to save data in."><elem key="ERROR">Please enter the complete path of the directory to save data in.</elem>
+</script><script id="http-malware-host" output="Host appears to be clean"/><script id="http-methods" output="&#xa;  Supported Methods: GET"><table key="Supported Methods">
+<elem>GET</elem>
+</table>
+</script><script id="http-title" output="Site doesn&apos;t have a title (application/json)."></script><script id="http-vhosts" output="&#xa;128 names had status 405"/><script id="http-chrono" output="Request times for /; avg: 162.21ms; min: 158.74ms; max: 164.90ms"/><script id="http-wordpress-users" output="[Error] Wordpress installation was not found. We couldn&apos;t find wp-login.php"/><script id="http-jsonp-detection" output="Couldn&apos;t find any JSONP endpoints."/><script id="http-devframework" output="Couldn&apos;t determine the underlying framework or CMS. Try increasing &apos;httpspider.maxpagecount&apos; value to spider more pages."/><script id="http-headers" output="&#xa;  Content-Type: application/json&#xa;  Vary: Origin&#xa;  Date: Sun, 15 Jun 2025 08:22:46 GMT&#xa;  Content-Length: 27&#xa;  Connection: close&#xa;  &#xa;  (Request type: GET)&#xa;"/><script id="http-useragent-tester" output="&#xa;  Status for browser useragent: 401&#xa;  Allowed User Agents: &#xa;    Mozilla/5.0 (compatible; Nmap Scripting Engine; https://nmap.org/book/nse.html)&#xa;    libwww&#xa;    lwp-trivial&#xa;    libcurl-agent/1.0&#xa;    PHP/&#xa;    Python-urllib/2.5&#xa;    GT::WWW&#xa;    Snoopy&#xa;    MFC_Tear_Sample&#xa;    HTTP::Lite&#xa;    PHPCrawl&#xa;    URI::Fetch&#xa;    Zend_Http_Client&#xa;    http client&#xa;    PECL::HTTP&#xa;    Wget/1.13.4 (linux-gnu)&#xa;    WWW-Mechanize/1.34"><elem key="Status for browser useragent">401</elem>
+<table key="Allowed User Agents">
+<elem>Mozilla/5.0 (compatible; Nmap Scripting Engine; https://nmap.org/book/nse.html)</elem>
+<elem>libwww</elem>
+<elem>lwp-trivial</elem>
+<elem>libcurl-agent/1.0</elem>
+<elem>PHP/</elem>
+<elem>Python-urllib/2.5</elem>
+<elem>GT::WWW</elem>
+<elem>Snoopy</elem>
+<elem>MFC_Tear_Sample</elem>
+<elem>HTTP::Lite</elem>
+<elem>PHPCrawl</elem>
+<elem>URI::Fetch</elem>
+<elem>Zend_Http_Client</elem>
+<elem>http client</elem>
+<elem>PECL::HTTP</elem>
+<elem>Wget/1.13.4 (linux-gnu)</elem>
+<elem>WWW-Mechanize/1.34</elem>
+</table>
+</script><script id="http-litespeed-sourcecode-download" output="Request with null byte did not work. This web server might not be vulnerable"/><script id="http-cors" output="GET POST PUT DELETE OPTIONS PATCH"/><script id="http-sitemap-generator" output="&#xa;  Directory structure:&#xa;  Longest directory structure:&#xa;    Depth: 0&#xa;    Dir: /&#xa;  Total files found (by extension):&#xa;    &#xa;"/><script id="http-wordpress-enum" output="Nothing found amongst the top 100 resources,use -&#45;script-args search-limit=&lt;number|all&gt; for deeper analysis)"/><script id="http-enum" output="&#xa;  /cache/backup/: Possible backup (401 Unauthorized)&#xa;  /cache/: Potentially interesting folder (401 Unauthorized)&#xa;  /configs/: Potentially interesting folder (401 Unauthorized)&#xa;  /script/: Potentially interesting folder (401 Unauthorized)&#xa;"/><script id="http-errors" output="&#xa;Spidering limited to: maxpagecount=40; withinhost=localhost&#xa;  Found the following error pages: &#xa;  &#xa;  Error Code: 401&#xa;  &#x9;http://localhost:9090/&#xa;"/><script id="http-mobileversion-checker" output="No mobile version detected."/><script id="http-drupal-enum" output="Nothing found amongst the top 100 resources,use -&#45;script-args number=&lt;number|all&gt; for deeper analysis)"/><script id="http-referer-checker" output="Couldn&apos;t find any cross-domain scripts."/><script id="http-auth-finder" output="&#xa;Spidering limited to: maxdepth=3; maxpagecount=20; withinhost=localhost&#xa;  url                     method&#xa;  http://localhost:9090/  HTTP: Server returned no authentication headers.&#xa;"/><script id="http-stored-xss" output="Couldn&apos;t find any stored XSS vulnerabilities."/><script id="http-comments-displayer" output="Couldn&apos;t find any comments."/><script id="http-auth" output="&#xa;HTTP/1.1 401 Unauthorized&#xd;&#xa;  Server returned status 401 but no WWW-Authenticate header.&#xa;"/><script id="http-date" output="Sun, 15 Jun 2025 08:22:31 GMT; 0s from local time."><elem key="date">2025-06-15T08:22:31+00:00</elem>
+<elem key="delta">0.0</elem>
+</script><script id="fingerprint-strings" output="&#xa;  FourOhFourRequest: &#xa;    HTTP/1.0 404 Not Found&#xa;    Content-Type: text/plain; charset=utf-8&#xa;    Vary: Origin&#xa;    X-Content-Type-Options: nosniff&#xa;    Date: Sun, 15 Jun 2025 08:22:26 GMT&#xa;    Content-Length: 19&#xa;    page not found&#xa;  GenericLines, Help, LPDString, RTSPRequest, SIPOptions, SSLSessionReq, Socks5, SqueezeCenter_CLI: &#xa;    HTTP/1.1 400 Bad Request&#xa;    Content-Type: text/plain; charset=utf-8&#xa;    Connection: close&#xa;    Request&#xa;  GetRequest: &#xa;    HTTP/1.0 401 Unauthorized&#xa;    Content-Type: application/json&#xa;    Vary: Origin&#xa;    Date: Sun, 15 Jun 2025 08:21:56 GMT&#xa;    Content-Length: 27&#xa;    {&quot;message&quot;:&quot;Unauthorized&quot;}&#xa;  HTTPOptions: &#xa;    HTTP/1.0 405 Method Not Allowed&#xa;    Allow: GET&#xa;    Vary: Origin&#xa;    Date: Sun, 15 Jun 2025 08:22:11 GMT&#xa;    Content-Length: 0&#xa;  OfficeScan: &#xa;    HTTP/1.1 400 Bad Request: missing required Host header&#xa;    Content-Type: text/plain; charset=utf-8&#xa;    Connection: close&#xa;    Request: missing required Host header"><elem key="FourOhFourRequest">&#xa;    HTTP/1.0 404 Not Found&#xa;    Content-Type: text/plain; charset=utf-8&#xa;    Vary: Origin&#xa;    X-Content-Type-Options: nosniff&#xa;    Date: Sun, 15 Jun 2025 08:22:26 GMT&#xa;    Content-Length: 19&#xa;    page not found</elem>
+<elem key="GenericLines, Help, LPDString, RTSPRequest, SIPOptions, SSLSessionReq, Socks5, SqueezeCenter_CLI">&#xa;    HTTP/1.1 400 Bad Request&#xa;    Content-Type: text/plain; charset=utf-8&#xa;    Connection: close&#xa;    Request</elem>
+<elem key="GetRequest">&#xa;    HTTP/1.0 401 Unauthorized&#xa;    Content-Type: application/json&#xa;    Vary: Origin&#xa;    Date: Sun, 15 Jun 2025 08:21:56 GMT&#xa;    Content-Length: 27&#xa;    {&quot;message&quot;:&quot;Unauthorized&quot;}</elem>
+<elem key="HTTPOptions">&#xa;    HTTP/1.0 405 Method Not Allowed&#xa;    Allow: GET&#xa;    Vary: Origin&#xa;    Date: Sun, 15 Jun 2025 08:22:11 GMT&#xa;    Content-Length: 0</elem>
+<elem key="OfficeScan">&#xa;    HTTP/1.1 400 Bad Request: missing required Host header&#xa;    Content-Type: text/plain; charset=utf-8&#xa;    Connection: close&#xa;    Request: missing required Host header</elem>
+</script><script id="http-method-tamper" output="&#xa;  VULNERABLE:&#xa;  Authentication bypass by HTTP verb tampering&#xa;    State: VULNERABLE (Exploitable)&#xa;      This web server contains password protected resources vulnerable to authentication bypass&#xa;      vulnerabilities via HTTP verb tampering. This is often found in web servers that only limit access to the&#xa;       common HTTP methods and in misconfigured .htaccess files.&#xa;             &#xa;    Extra information:&#xa;      &#xa;  URIs suspected to be vulnerable to HTTP verb tampering:&#xa;    / [HEAD]&#xa;  &#xa;    References:&#xa;      https://www.owasp.org/index.php/Testing_for_HTTP_Methods_and_XST_%28OWASP-CM-008%29&#xa;      http://www.imperva.com/resources/glossary/http_verb_tampering.html&#xa;      http://www.mkit.com.ar/labs/htexploit/&#xa;      http://capec.mitre.org/data/definitions/274.html&#xa;"><table key="NMAP-5">
+<elem key="title">Authentication bypass by HTTP verb tampering</elem>
+<elem key="state">VULNERABLE (Exploitable)</elem>
+<table key="description">
+<elem>This web server contains password protected resources vulnerable to authentication bypass&#xa;vulnerabilities via HTTP verb tampering. This is often found in web servers that only limit access to the&#xa; common HTTP methods and in misconfigured .htaccess files.&#xa;       </elem>
+</table>
+<table key="extra_info">
+<elem>&#xa;URIs suspected to be vulnerable to HTTP verb tampering:&#xa;  / [HEAD]&#xa;</elem>
+</table>
+<table key="refs">
+<elem>https://www.owasp.org/index.php/Testing_for_HTTP_Methods_and_XST_%28OWASP-CM-008%29</elem>
+<elem>http://www.imperva.com/resources/glossary/http_verb_tampering.html</elem>
+<elem>http://www.mkit.com.ar/labs/htexploit/</elem>
+<elem>http://capec.mitre.org/data/definitions/274.html</elem>
+</table>
+</table>
+</script><script id="http-security-headers" output=""></script><script id="http-csrf" output="Couldn&apos;t find any CSRF vulnerabilities."/><script id="http-dombased-xss" output="Couldn&apos;t find any DOM based XSS."/><script id="http-feed" output="Couldn&apos;t find any feeds."/></port>
+</ports>
+<times srtt="108" rttvar="5000" to="100000"/>
+</host>
+<taskbegin task="NSE" time="1749975783"/>
+<taskend task="NSE" time="1749975783"/>
+<taskbegin task="NSE" time="1749975783"/>
+<taskend task="NSE" time="1749975783"/>
+<taskbegin task="NSE" time="1749975783"/>
+<taskend task="NSE" time="1749975783"/>
+<runstats><finished time="1749975783" timestr="Sun Jun 15 16:23:03 2025" summary="Nmap done at Sun Jun 15 16:23:03 2025; 1 IP address (1 host up) scanned in 73.36 seconds" elapsed="73.36" exit="success"/><hosts up="1" down="0" total="1"/>
+</runstats>
+</nmaprun>

@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE nmaprun>
+<?xml-stylesheet href="file:///usr/share/nmap/nmap.xsl" type="text/xsl"?>
+<!-- Nmap 7.95 scan initiated Wed Jun 18 15:44:25 2025 as: /usr/lib/nmap/nmap -&#45;privileged -vv -&#45;reason -Pn -T4 -sV -p 445 &quot;-&#45;script=banner,(nbstat or smb* or ssl*) and not (brute or broadcast or dos or external or fuzzer)&quot; -oN /home/lizi/Desktop/myproj/PenRecon/web-backend/results/10.211.55.2/scans/tcp445/tcp_445_smb_nmap.txt -oX /home/lizi/Desktop/myproj/PenRecon/web-backend/results/10.211.55.2/scans/tcp445/xml/tcp_445_smb_nmap.xml 10.211.55.2 -->
+<nmaprun scanner="nmap" args="/usr/lib/nmap/nmap -&#45;privileged -vv -&#45;reason -Pn -T4 -sV -p 445 &quot;-&#45;script=banner,(nbstat or smb* or ssl*) and not (brute or broadcast or dos or external or fuzzer)&quot; -oN /home/lizi/Desktop/myproj/PenRecon/web-backend/results/10.211.55.2/scans/tcp445/tcp_445_smb_nmap.txt -oX /home/lizi/Desktop/myproj/PenRecon/web-backend/results/10.211.55.2/scans/tcp445/xml/tcp_445_smb_nmap.xml 10.211.55.2" start="1750232665" startstr="Wed Jun 18 15:44:25 2025" version="7.95" xmloutputversion="1.05">
+<scaninfo type="syn" protocol="tcp" numservices="1" services="445"/>
+<verbose level="2"/>
+<debugging level="0"/>
+<taskbegin task="NSE" time="1750232665"/>
+<taskend task="NSE" time="1750232665"/>
+<taskbegin task="NSE" time="1750232665"/>
+<taskend task="NSE" time="1750232665"/>
+<taskbegin task="NSE" time="1750232665"/>
+<taskend task="NSE" time="1750232665"/>
+<taskbegin task="ARP Ping Scan" time="1750232665"/>
+<hosthint><status state="up" reason="arp-response" reason_ttl="0"/>
+<address addr="10.211.55.2" addrtype="ipv4"/>
+<address addr="8A:66:5A:01:D0:64" addrtype="mac"/>
+<hostnames>
+</hostnames>
+</hosthint>
+<taskend task="ARP Ping Scan" time="1750232665" extrainfo="1 total hosts"/>
+<taskbegin task="Parallel DNS resolution of 1 host." time="1750232665"/>
+<taskend task="Parallel DNS resolution of 1 host." time="1750232665"/>
+<taskbegin task="SYN Stealth Scan" time="1750232665"/>
+<taskend task="SYN Stealth Scan" time="1750232665" extrainfo="1 total ports"/>
+<taskbegin task="Service scan" time="1750232666"/>
+<taskend task="Service scan" time="1750232692" extrainfo="1 service on 1 host"/>
+<taskbegin task="NSE" time="1750232692"/>
+<taskend task="NSE" time="1750232702"/>
+<taskbegin task="NSE" time="1750232702"/>
+<taskend task="NSE" time="1750232702"/>
+<taskbegin task="NSE" time="1750232702"/>
+<taskend task="NSE" time="1750232702"/>
+<host starttime="1750232665" endtime="1750232702"><status state="up" reason="arp-response" reason_ttl="0"/>
+<address addr="10.211.55.2" addrtype="ipv4"/>
+<address addr="8A:66:5A:01:D0:64" addrtype="mac"/>
+<hostnames>
+</hostnames>
+<ports><port protocol="tcp" portid="445"><state state="open" reason="syn-ack" reason_ttl="64"/><service name="microsoft-ds" method="table" conf="3"/><script id="smb-enum-services" output="ERROR: Script execution failed (use -d to debug)"/></port>
+</ports>
+<hostscript><script id="smb2-capabilities" output="&#xa;  2:0:2: &#xa;    All capabilities are disabled&#xa;  2:1:0: &#xa;    Leasing&#xa;    Multi-credit operations&#xa;  3:0:0: &#xa;    Leasing&#xa;    Multi-credit operations&#xa;  3:0:2: &#xa;    Leasing&#xa;    Multi-credit operations"><table key="2:0:2">
+<elem>All capabilities are disabled</elem>
+</table>
+<table key="2:1:0">
+<elem>Leasing</elem>
+<elem>Multi-credit operations</elem>
+</table>
+<table key="3:0:0">
+<elem>Leasing</elem>
+<elem>Multi-credit operations</elem>
+</table>
+<table key="3:0:2">
+<elem>Leasing</elem>
+<elem>Multi-credit operations</elem>
+</table>
+</script><script id="smb2-time" output="&#xa;  date: 2025-06-18T07:43:42&#xa;  start_date: N/A"><elem key="date">2025-06-18T07:43:42</elem>
+<elem key="start_date">N/A</elem>
+</script><script id="smb2-security-mode" output="&#xa;  3:0:2: &#xa;    Message signing enabled and required"><table key="3:0:2">
+<elem>Message signing enabled and required</elem>
+</table>
+</script><script id="smb-protocols" output="&#xa;  dialects: &#xa;    2:0:2&#xa;    2:1:0&#xa;    3:0:0&#xa;    3:0:2"><table key="dialects">
+<elem>2:0:2</elem>
+<elem>2:1:0</elem>
+<elem>3:0:0</elem>
+<elem>3:0:2</elem>
+</table>
+</script><script id="nbstat" output="NetBIOS name: LIZI, NetBIOS user: &lt;unknown&gt;, NetBIOS MAC: 8a:66:5a:01:d0:64 (unknown)&#xa;Names:&#xa;  LIZI&lt;00&gt;             Flags: &lt;unique&gt;&lt;active&gt;&#xa;  LIZI&lt;20&gt;             Flags: &lt;unique&gt;&lt;active&gt;&#xa;  WORKGROUP&lt;00&gt;        Flags: &lt;group&gt;&lt;active&gt;&#xa;Statistics:&#xa;  8a:66:5a:01:d0:64:00:00:00:00:00:00:00:00:00:00:00&#xa;  00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00&#xa;  00:00:00:00:00:00:00:00:00:00:00:00:00:00"/><script id="smb-mbenum" output="&#xa;  ERROR: Failed to connect to browser service: Could not negotiate a connection:SMB: Failed to receive bytes: EOF"/><script id="smb-print-text" output="false">false</script><script id="smb-vuln-ms10-061" output="Could not negotiate a connection:SMB: Failed to receive bytes: EOF">false</script></hostscript><times srtt="102" rttvar="3780" to="100000"/>
+</host>
+<taskbegin task="NSE" time="1750232702"/>
+<taskend task="NSE" time="1750232702"/>
+<taskbegin task="NSE" time="1750232702"/>
+<taskend task="NSE" time="1750232702"/>
+<taskbegin task="NSE" time="1750232702"/>
+<taskend task="NSE" time="1750232702"/>
+<runstats><finished time="1750232702" timestr="Wed Jun 18 15:45:02 2025" summary="Nmap done at Wed Jun 18 15:45:02 2025; 1 IP address (1 host up) scanned in 36.70 seconds" elapsed="36.70" exit="success"/><hosts up="1" down="0" total="1"/>
+</runstats>
+</nmaprun>

@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE nmaprun>
+<?xml-stylesheet href="file:///usr/local/bin/../share/nmap/nmap.xsl" type="text/xsl"?>
+<!-- Nmap 7.95 scan initiated Sun Jun 15 16:21:49 2025 as: nmap -vv -&#45;reason -Pn -T4 -sV -p 8000 &quot;-&#45;script=banner,(http* or ssl*) and not (brute or broadcast or dos or external or http-slowloris* or fuzzer)&quot; -oN /Users/lizi/Desktop/PenRecon/web-backend/results/localhost/scans/tcp8000/tcp_8000_http_nmap.txt -oX /Users/lizi/Desktop/PenRecon/web-backend/results/localhost/scans/tcp8000/xml/tcp_8000_http_nmap.xml localhost -->
+<nmaprun scanner="nmap" args="nmap -vv -&#45;reason -Pn -T4 -sV -p 8000 &quot;-&#45;script=banner,(http* or ssl*) and not (brute or broadcast or dos or external or http-slowloris* or fuzzer)&quot; -oN /Users/lizi/Desktop/PenRecon/web-backend/results/localhost/scans/tcp8000/tcp_8000_http_nmap.txt -oX /Users/lizi/Desktop/PenRecon/web-backend/results/localhost/scans/tcp8000/xml/tcp_8000_http_nmap.xml localhost" start="1749975709" startstr="Sun Jun 15 16:21:49 2025" version="7.95" xmloutputversion="1.05">
+<scaninfo type="connect" protocol="tcp" numservices="1" services="8000"/>
+<verbose level="2"/>
+<debugging level="0"/>
+<taskbegin task="NSE" time="1749975709"/>
+<taskend task="NSE" time="1749975709"/>
+<taskbegin task="NSE" time="1749975709"/>
+<taskend task="NSE" time="1749975709"/>
+<taskbegin task="NSE" time="1749975709"/>
+<taskend task="NSE" time="1749975709"/>
+<taskbegin task="Connect Scan" time="1749975709"/>
+<taskend task="Connect Scan" time="1749975709" extrainfo="1 total ports"/>
+<taskbegin task="Service scan" time="1749975710"/>
+<taskend task="Service scan" time="1749975716" extrainfo="1 service on 1 host"/>
+<taskbegin task="NSE" time="1749975716"/>
+<taskend task="NSE" time="1749975726"/>
+<taskbegin task="NSE" time="1749975726"/>
+<taskend task="NSE" time="1749975726"/>
+<taskbegin task="NSE" time="1749975726"/>
+<taskend task="NSE" time="1749975726"/>
+<host starttime="1749975709" endtime="1749975726"><status state="up" reason="user-set" reason_ttl="0"/>
+<address addr="127.0.0.1" addrtype="ipv4"/>
+<hostnames>
+<hostname name="localhost" type="user"/>
+<hostname name="localhost" type="PTR"/>
+</hostnames>
+<ports><port protocol="tcp" portid="8000"><state state="open" reason="syn-ack" reason_ttl="0"/><service name="http" product="Uvicorn" method="probed" conf="10"><cpe>cpe:/a:encode:uvicorn</cpe></service><script id="http-comments-displayer" output="Couldn&apos;t find any comments."/><script id="http-wordpress-users" output="[Error] Wordpress installation was not found. We couldn&apos;t find wp-login.php"/><script id="http-wordpress-enum" output="Nothing found amongst the top 100 resources,use -&#45;script-args search-limit=&lt;number|all&gt; for deeper analysis)"/><script id="http-fetch" output="Please enter the complete path of the directory to save data in."><elem key="ERROR">Please enter the complete path of the directory to save data in.</elem>
+</script><script id="http-referer-checker" output="Couldn&apos;t find any cross-domain scripts."/><script id="http-date" output="Sun, 15 Jun 2025 08:21:57 GMT; -1s from local time."><elem key="date">2025-06-15T08:21:57+00:00</elem>
+<elem key="delta">-1.0</elem>
+</script><script id="http-devframework" output="Couldn&apos;t determine the underlying framework or CMS. Try increasing &apos;httpspider.maxpagecount&apos; value to spider more pages."/><script id="http-drupal-enum" output="Nothing found amongst the top 100 resources,use -&#45;script-args number=&lt;number|all&gt; for deeper analysis)"/><script id="http-jsonp-detection" output="Couldn&apos;t find any JSONP endpoints."/><script id="http-useragent-tester" output="&#xa;  Status for browser useragent: 404&#xa;  Allowed User Agents: &#xa;    Mozilla/5.0 (compatible; Nmap Scripting Engine; https://nmap.org/book/nse.html)&#xa;    libwww&#xa;    lwp-trivial&#xa;    libcurl-agent/1.0&#xa;    PHP/&#xa;    Python-urllib/2.5&#xa;    GT::WWW&#xa;    Snoopy&#xa;    MFC_Tear_Sample&#xa;    HTTP::Lite&#xa;    PHPCrawl&#xa;    URI::Fetch&#xa;    Zend_Http_Client&#xa;    http client&#xa;    PECL::HTTP&#xa;    Wget/1.13.4 (linux-gnu)&#xa;    WWW-Mechanize/1.34"><elem key="Status for browser useragent">404</elem>
+<table key="Allowed User Agents">
+<elem>Mozilla/5.0 (compatible; Nmap Scripting Engine; https://nmap.org/book/nse.html)</elem>
+<elem>libwww</elem>
+<elem>lwp-trivial</elem>
+<elem>libcurl-agent/1.0</elem>
+<elem>PHP/</elem>
+<elem>Python-urllib/2.5</elem>
+<elem>GT::WWW</elem>
+<elem>Snoopy</elem>
+<elem>MFC_Tear_Sample</elem>
+<elem>HTTP::Lite</elem>
+<elem>PHPCrawl</elem>
+<elem>URI::Fetch</elem>
+<elem>Zend_Http_Client</elem>
+<elem>http client</elem>
+<elem>PECL::HTTP</elem>
+<elem>Wget/1.13.4 (linux-gnu)</elem>
+<elem>WWW-Mechanize/1.34</elem>
+</table>
+</script><script id="http-stored-xss" output="Couldn&apos;t find any stored XSS vulnerabilities."/><script id="http-vhosts" output="&#xa;128 names had status 404"/><script id="http-errors" output="&#xa;Spidering limited to: maxpagecount=40; withinhost=localhost&#xa;  Found the following error pages: &#xa;  &#xa;  Error Code: 404&#xa;  &#x9;http://localhost:8000/&#xa;"/><script id="http-cors" output="GET POST PUT DELETE OPTIONS PATCH"/><script id="http-chrono" output="Request times for /; avg: 163.39ms; min: 161.60ms; max: 165.13ms"/><script id="http-sitemap-generator" output="&#xa;  Directory structure:&#xa;  Longest directory structure:&#xa;    Depth: 0&#xa;    Dir: /&#xa;  Total files found (by extension):&#xa;    &#xa;"/><script id="http-dombased-xss" output="Couldn&apos;t find any DOM based XSS."/><script id="http-security-headers" output=""></script><script id="http-csrf" output="Couldn&apos;t find any CSRF vulnerabilities."/><script id="http-title" output="Site doesn&apos;t have a title (application/json)."></script><script id="http-feed" output="Couldn&apos;t find any feeds."/><script id="http-headers" output="&#xa;  date: Sun, 15 Jun 2025 08:21:59 GMT&#xa;  server: uvicorn&#xa;  content-length: 22&#xa;  content-type: application/json&#xa;  Connection: close&#xa;  &#xa;  (Request type: GET)&#xa;"/><script id="http-mobileversion-checker" output="No mobile version detected."/><script id="http-server-header" output="uvicorn"><elem>uvicorn</elem>
+</script><script id="http-malware-host" output="Host appears to be clean"/></port>
+</ports>
+<times srtt="127" rttvar="5000" to="100000"/>
+</host>
+<taskbegin task="NSE" time="1749975726"/>
+<taskend task="NSE" time="1749975726"/>
+<taskbegin task="NSE" time="1749975726"/>
+<taskend task="NSE" time="1749975726"/>
+<taskbegin task="NSE" time="1749975726"/>
+<taskend task="NSE" time="1749975726"/>
+<runstats><finished time="1749975726" timestr="Sun Jun 15 16:22:06 2025" summary="Nmap done at Sun Jun 15 16:22:06 2025; 1 IP address (1 host up) scanned in 16.93 seconds" elapsed="16.93" exit="success"/><hosts up="1" down="0" total="1"/>
+</runstats>
+</nmaprun>

@@ -1,3 +1,19 @@
+"""
+PenRecon - 渗透测试自动化平台后端API
+
+这个文件实现了PenRecon平台的后端API服务，主要功能包括：
+1. AutoRecon扫描管理 - 启动、监控、获取扫描结果
+2. 扫描结果解析 - 解析Nmap和漏洞扫描结果
+3. 网络拓扑图生成 - 将扫描结果转换为可视化数据
+4. AI分析集成 - 使用DeepSeek AI分析扫描结果
+5. 文件上传处理 - 支持压缩文件上传和解压
+6. 扫描状态管理 - 跟踪和管理扫描进度
+
+作者: PenRecon Team
+版本: 1.0.0
+"""
+
+# 标准库导入
 from fastapi import FastAPI, HTTPException, UploadFile, File
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import JSONResponse
@@ -10,79 +26,125 @@ import logging
 from datetime import datetime
 import aiofiles
 import json
-import re # Add this import for regex
-from pydantic import BaseModel # Import BaseModel
+import re  # 用于正则表达式匹配
+from pydantic import BaseModel  # 数据验证模型
 import subprocess
 import asyncio
 import uuid
 from threading import Thread
 import queue
-import xml.etree.ElementTree as ET # Import ElementTree for XML parsing
+import xml.etree.ElementTree as ET  # XML解析
 from openai import OpenAI
 from dotenv import load_dotenv
-import httpx # Import httpx
-import zipfile # Add zipfile import
-import tarfile # Add tarfile import
+import httpx  # HTTP客户端
+import zipfile  # ZIP文件处理
+import tarfile  # TAR文件处理
+import time
+import select
 
-# Load environment variables
+# 加载环境变量（从.env文件）
 load_dotenv()
 
-# Define Pydantic model for annotation request
+# ============================================================================
+# Pydantic 数据模型定义
+# ============================================================================
+
 class AnnotationRequest(BaseModel):
-    analysis_id: str
-    parent_node_name: str # Changed from node_name to parent_node_name
-    annotation_text: str # Changed from annotation to annotation_text
+    """注释请求数据模型"""
+    analysis_id: str  # 分析ID
+    parent_node_name: str  # 父节点名称
+    annotation_text: str  # 注释文本内容
 
 class DeleteNodeRequest(BaseModel):
-    analysis_id: str
-    node_name: str
+    """删除节点请求数据模型"""
+    analysis_id: str  # 分析ID
+    node_name: str  # 要删除的节点名称
 
-# Define Pydantic models
 class ScanRequest(BaseModel):
-    ip: str
-    overwrite: bool = False
+    """扫描请求数据模型"""
+    ip: str  # 目标IP地址
+    overwrite: bool = False  # 是否覆盖现有结果
 
-# Configure logging
+# ============================================================================
+# 日志配置
+# ============================================================================
+
+# 配置日志格式和级别
 logging.basicConfig(
     level=logging.INFO,
     format='%(asctime)s - %(name)s - %(levelname)s - %(message)s'
 )
 logger = logging.getLogger(__name__)
 
-app = FastAPI()
+# ============================================================================
+# FastAPI 应用初始化
+# ============================================================================
 
-# Configure CORS
+app = FastAPI(
+    title="PenRecon API",
+    description="渗透测试自动化平台后端API",
+    version="1.0.0"
+)
+
+# 配置CORS中间件，允许前端跨域访问
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["http://localhost:3000", "http://localhost:3001"],
+    allow_origins=["http://localhost:3000", "http://localhost:3001"],  # 允许的前端域名
     allow_credentials=True,
-    allow_methods=["*"],
-    allow_headers=["*"],
+    allow_methods=["*"],  # 允许所有HTTP方法
+    allow_headers=["*"],  # 允许所有请求头
 )
+
+# ============================================================================
+# 健康检查端点
+# ============================================================================
 
 @app.get("/ping")
 async def ping():
+    """健康检查端点，用于测试API服务是否正常运行"""
     return {"message": "pong"}
 
-# Initialize OpenAI client globally
+# ============================================================================
+# AI分析器类
+# ============================================================================
+
 class AutoReconAnalyzer:
+    """
+    AutoRecon结果AI分析器
+    
+    使用DeepSeek AI对AutoRecon扫描结果进行智能分析，
+    生成渗透测试建议和攻击路径。
+    """
+    
     def __init__(self):
+        """初始化AI分析器"""
+        # 从环境变量获取API密钥
         api_key = os.getenv('DEEPSEEK_API_KEY')
         if not api_key:
             logger.error("DEEPSEEK_API_KEY environment variable not found. AI analysis will not be available.")
             self.client = None
             return
+        
         logger.info("DEEPSEEK_API_KEY loaded successfully. Initializing DeepSeek AI client.")
         
+        # 初始化OpenAI客户端（使用DeepSeek API）
         self.client = OpenAI(
             api_key=api_key,
             base_url="https://api.deepseek.com/v1",
-            http_client=httpx.Client() # Explicitly set no proxies
+            http_client=httpx.Client()  # 显式设置无代理
         )
         logger.info("DeepSeek AI client initialized.")
         
     def read_results(self, results_path):
-        """读取AutoRecon的结果文件"""
+        """
+        读取AutoRecon的结果文件
+        
+        Args:
+            results_path (str): AutoRecon结果目录路径
+            
+        Returns:
+            List[Dict]: 包含文件路径和内容的列表，如果失败返回None
+        """
         logger.info(f"Attempting to read AutoRecon results from: {results_path}")
         results = []
         path = Path(results_path)
@@ -92,13 +154,13 @@ class AutoReconAnalyzer:
             return None
             
         # 递归遍历所有文本文件
-        for file_path in path.rglob("*.txt"): # Only process .txt files for analysis
+        for file_path in path.rglob("*.txt"):  # 只处理.txt文件进行分析
             try:
                 with open(file_path, 'r', encoding='utf-8') as f:
                     content = f.read()
                     if content.strip():  # 只添加非空文件
                         results.append({
-                            "file": str(file_path.relative_to(path)), # Store relative path
+                            "file": str(file_path.relative_to(path)),  # 存储相对路径
                             "content": content
                         })
                         logger.debug(f"Successfully read file: {file_path}")
@@ -109,7 +171,15 @@ class AutoReconAnalyzer:
         return results
 
     def analyze_results(self, results):
-        """使用AI分析AutoRecon的结果"""
+        """
+        使用AI分析AutoRecon的结果
+        
+        Args:
+            results (List[Dict]): 扫描结果列表
+            
+        Returns:
+            str: AI分析报告，如果失败返回错误信息
+        """
         logger.info("Starting AI analysis...")
         if not self.client:
             logger.error("AI analysis client is not initialized. Cannot proceed with analysis.")
@@ -119,66 +189,55 @@ class AutoReconAnalyzer:
             logger.warning("No results provided for AI analysis.")
             return "没有找到可分析的结果。"
             
-        # 准备提示信息
-        prompt = """你是一位经验丰富的渗透测试专家。你收到了一份 AutoRecon 的扫描结果报告（包含 Nmap 扫描、漏洞扫描、开放端口信息等）。请根据这些结果，生成一份详细的渗透测试命令清单，列出下一步可能采取的攻击或信息收集命令。请将命令分为以下几个类别：
+        # 升级后的AI分析提示，参考hacktricks，增加更多工具和利用方式
+        prompt = '''你是一位经验丰富的渗透测试专家。你收到了一份 AutoRecon 的扫描结果报告（包含 Nmap 扫描、漏洞扫描、开放端口信息等）。请根据这些结果，生成一份详细的渗透测试命令清单，列出下一步可能采取的攻击或信息收集命令。请将命令分为以下几个类别，并尽量覆盖常见的渗透测试工具和技巧（可参考 hacktricks 网站）：
 
 **1. 信息收集与侦察 (Reconnaissance)**
-*   **主机发现与端口扫描**：`nmap` 和 `powershell` 命令，用于进一步确认开放端口、服务版本和操作系统。具体包括：
-    *   主机发现：`sudo nmap -sn <本机ip的网段>`
-    *   初步探测端口、服务版本和操作系统：`sudo nmap -sT -sV -O -p- <IP>`
-    *   默认脚本扫描：`sudo nmap -sT -sC <IP>`
-    *   默认漏洞脚本扫描：`sudo nmap --script=vuln <IP>`
-    *   UDP扫描：`sudo nmap -sU -sV -O --top-ports 20 --min-rate 5000 <IP>`
-    *   PowerShell 端口扫描：`1..1024 | % {echo ((New-Object Net.Sockets.TcpClient).Connect(\"192.168.50.151\", $_)) \"TCP port $_ is open\"} 2>$null`
-*   **子域名与DNS信息枚举**：
-    *   `nslookup` (Windows) 查询域名、任何类型记录和邮件服务器的命令。
-    *   `dnsenum` 进行域名枚举和区域传输测试的命令。
-    *   `dnsrecon` 进行域名枚举、区域传输和 Google Dorking 的命令。
-    *   `ffuf` 和 `gobuster` 进行子域名和目录爆破的命令。
-    *   `wfuzz` 进行子域名和目录爆破（绕过 404）的命令。
-*   **SMB/NetBIOS 信息收集**：
-    *   `enum4linux` 获取 SMB 共享和用户信息的命令。
-    *   `smbmap` 列出 SMB 共享内容，并进行认证登录的命令。
-    *   `crackmapexec smb` 枚举共享、用户和执行命令的命令。
-    *   `nbtscan` 扫描 NetBIOS 的命令。
-*   **LDAP 信息收集**：
-    *   `windapsearch` 枚举 LDAP 用户和组的命令。
-    *   `ldapsearch` 查询 LDAP 目录的命令。
-*   **SNMP 信息收集**：
-    *   `onesixtyone` 扫描 SNMP 团体字符串的命令。
-    *   `snmpwalk` 枚举 MIB tree、用户、进程、已安装软件和监听端口的命令。
-*   **网络流量分析**：
-    *   `tcpdump` 捕获 ICMP 流量的命令。
-    *   `tshark` 捕获、保存、读取、解码和过滤网络流量（例如提取凭据、过滤用户代理）的命令。
-    *   `responder` 监听网络流量的命令。
-*   **被动信息收集**：提及 Wappalyzer, BuiltWith, Shodan, Censys, Hunter.io, TheHarvester 等工具。
-*   **Google Hacking / Dorking**：`site:`, `filetype:`, `ext:`, `intitle:` 等高级搜索语法及其用途。
-*   **AutoRecon**：明确运行 `autorecon <target_ip>` 作为初步信息收集工具。
+*   **主机发现与端口扫描**：如 nmap、masscan、rustscan、amap、netcat、powershell 等。
+*   **子域名与DNS信息枚举**：如 nslookup、dig、dnsenum、dnsrecon、amass、subfinder、assetfinder、ffuf、gobuster、wfuzz、crt.sh、Shodan、Censys、FOFA、hunter.io。
+*   **Web目录/文件/参数爆破**：如 gobuster、ffuf、dirsearch、feroxbuster、wfuzz、arjun。
+*   **SMB/NetBIOS/LDAP/AD信息收集**：如 enum4linux、smbmap、crackmapexec、rpcclient、nbtscan、ldapsearch、bloodhound、SharpHound、impacket 工具集。
+*   **SNMP信息收集**：如 onesixtyone、snmpwalk、snmp-check。
+*   **网络流量分析**：如 tcpdump、wireshark、tshark、mitmproxy、bettercap、responder。
+*   **被动信息收集**：如 Wappalyzer、BuiltWith、Shodan、Censys、FOFA、Google Dorking。
+*   **云服务与资产收集**：如 cloud_enum、S3Scanner、ScoutSuite、Pacu。
 
-**2. 漏洞分析与利用 (Vulnerability Analysis & Exploitation)**
-*   **Web 漏洞**：
-    *   **SQL 注入**：MySQL 和 MSSQL 的查询、盲注（基于长度、字符、时间、ASCII）、报错注入、UNION 查询、高级绕过Payload、`group_concat()` 和 `sqlmap` 命令。
-    *   **XSS (跨站脚本)**：检查 `httponly`/`secure`，绕过 CSRF (nonce 获取)，会话窃取和键盘记录的 JavaScript 代码。
-    *   **文件包含**：常见敏感日志文件路径，Session 包含/注入。
-    *   **HTTP 请求走私**：`h2csmuggler` 命令。
-    *   **RTF/HTA Getshell**：利用 CVE-2017-0199 构造 RTF，`msfvenom` 生成 HTA 木马。
-*   **CMS 漏洞**：
-    *   **Jenkins**：利用 `build now`、定时任务和远程触发 `build` 执行 RCE 的命令和 `curl` 远程触发示例。
-    *   **WordPress**：`wpscan` 命令，文件上传漏洞 (CVE-2019-8942) 利用。
-    *   **Koken**, **Moodle**, **October CMS**：相关 Getshell 或 RCE 命令。
-*   **反序列化**：VIEWSTATE.NET 反序列化。
-*   **Log4Shell**：相关利用信息。
-*   **其他协议漏洞**：
-    *   **POP3**: `telnet` 连接，`hydra` 爆破。
-    *   **SSH**: 私钥连接，版本兼容性处理，传递参数，`crackmapexec` 爆破。
-    *   **WINRM**: `evil-winrm` 连接。
-    *   **TFTP**: `tftp` 连接和下载。
-    *   **SMTP**: `telnet` 连接，枚举用户。
-*   **MDT 漏洞**：定位服务器，获取 BCD/WIM 文件，提取凭证的命令。
-*   **PyTorch 模型注入**：使用 `inject.py` 脚本注入恶意代码执行命令。
+**2. 域渗透初步信息收集 (Active Directory Recon)**
+*   **域信息与用户枚举**：如 net、net view、net group、net user、net group "Domain Admins" /domain、dsquery、dsget、adfind、adenum、ldapsearch、bloodhound、SharpHound、crackmapexec、rpcclient、GetADUser、GetADComputer、Get-DomainUser、Get-DomainGroup、Get-DomainTrust、Get-DomainPolicy、powerview。
+*   **Kerberos信息收集**：如 kerbrute、GetNPUsers.py、GetUserSPNs.py、impacket工具集。
+*   **GPO与信任关系枚举**：如 gpresult、adfind、bloodhound、powerview。
 
-请输出每个命令，并简要说明其用途。
-"""
+**3. 漏洞分析与利用 (Vulnerability Analysis & Exploitation)**
+*   **Web漏洞**：
+    *   SQL注入（sqlmap、NoSQLMap、手工payload、sqlninja、jSQL）
+    *   XSS（手工payload、XSStrike、dalfox、xsscrapy）
+    *   文件包含/上传/解析（wfuzz、burp、ffuf、lfi-autopwn、fimap、upload bypass）
+    *   SSRF、SSTI、模板注入（tplmap、手工payload）
+    *   HTTP请求走私（h2csmuggler、smuggler、burp插件）
+    *   反序列化（ysoserial、phpggc、gadgetinspector）
+    *   认证绕过、逻辑漏洞、CORS、IDOR、JWT攻击
+*   **CMS与常见服务漏洞**：
+    *   WordPress（wpscan、漏洞利用、插件/主题检测）
+    *   Jenkins、Drupal、Joomla、Struts2、ThinkPHP、Discuz、phpMyAdmin、Koken、Moodle、October CMS
+*   **协议与服务漏洞**：
+    *   POP3/IMAP/SMTP/FTP/SSH/Telnet/WinRM/TFTP（hydra、medusa、ncrack、evil-winrm、msfconsole、telnet、ftp、ssh、tftp、smtp-user-enum、smtp-vrfy）
+    *   RDP（rdp-sec-check、crowbar、ncrack）
+    *   VNC、MySQL、MSSQL、Oracle、Redis、MongoDB、Memcached、Elasticsearch、Rsync、NFS、Docker、Kubernetes
+*   **Windows/AD攻击**：
+    *   mimikatz、secretsdump.py、impacket、kerbrute、rubeus、crackmapexec、bloodhound、SharpHound、lsassy、PetitPotam、PrintNightmare、ZeroLogon
+*   **Linux提权与利用**：
+    *   linpeas、linux-exploit-suggester、pspy、sudo提权、capabilities、SUID/SGID、环境变量、计划任务、NFS、Docker/LXC逃逸
+*   **漏洞利用框架**：
+    *   Metasploit、Cobalt Strike、Nuclei、Exploit-DB、searchsploit、msfvenom
+
+**4. 其他技巧与辅助工具**
+*   **信息泄露与敏感文件查找**：如 git-dumper、truffleHog、gitrob、find、grep、strings、binwalk、exiftool。
+*   **自动化与脚本**：如 autorecon、nmapAutomator、AutoBlue-MS17-010、MS17-010-Scanner、masscan、onesixtyone。
+*   **社会工程与钓鱼**：如 SET、gophish、evilginx2。
+*   **云服务攻击**：如 pacu、ScoutSuite、S3Scanner、cloud_enum。
+
+请输出每个命令，并简要说明其用途和适用场景。可以适当补充常见payload和Bypass技巧。
+请详细输出，不用担心内容过长或token浪费，越详细越好。'''
         
         # 添加扫描结果到提示中
         for result in results:
@@ -193,7 +252,7 @@ class AutoReconAnalyzer:
                     {"role": "user", "content": prompt}
                 ],
                 temperature=0.7,
-                max_tokens=2000
+                max_tokens=5000
             )
             logger.info("Received response from DeepSeek API.")
             return response.choices[0].message.content
@@ -201,15 +260,63 @@ class AutoReconAnalyzer:
             logger.error(f"AI分析过程中出错: {str(e)}")
             return f"AI分析过程中出错: {str(e)}"
 
+# 创建全局AI分析器实例
 analyzer = AutoReconAnalyzer()
+
+# ============================================================================
+# 全局数据存储
+# ============================================================================
 
 # 存储分析结果
 analysis_results: Dict[str, Dict] = {}
 
 # 存储扫描状态和日志
 scan_status: Dict[str, Dict] = {}
+MAX_SCAN_STATUS_ENTRIES = 10  # 最多保留10个扫描状态
+
+# ============================================================================
+# 扫描状态管理函数
+# ============================================================================
+
+def cleanup_old_scan_status():
+    """
+    清理旧的扫描状态，保持字典大小在限制内
+    
+    当扫描状态条目超过最大限制时，删除最旧的条目以避免内存泄漏
+    """
+    if len(scan_status) > MAX_SCAN_STATUS_ENTRIES:
+        # 按开始时间排序，删除最旧的条目
+        sorted_scans = sorted(scan_status.items(), key=lambda x: x[1].get('start_time', datetime.min))
+        scans_to_remove = len(scan_status) - MAX_SCAN_STATUS_ENTRIES
+        
+        for i in range(scans_to_remove):
+            scan_id = sorted_scans[i][0]
+            del scan_status[scan_id]
+            logger.info(f"Cleaned up old scan status: {scan_id}")
+
+def cleanup_completed_scan(scan_id: str):
+    """
+    清理已完成的扫描状态
+    
+    Args:
+        scan_id (str): 要清理的扫描ID
+    """
+    if scan_id in scan_status:
+        # 保留基本信息，清理大量日志数据
+        scan_status[scan_id]["logs"] = scan_status[scan_id]["logs"][-100:]  # 只保留最后100条日志
+        logger.info(f"Cleaned up completed scan: {scan_id}")
 
 def find_node_in_tree(tree, node_name):
+    """
+    在树状结构中查找指定名称的节点
+    
+    Args:
+        tree (Dict): 树状结构数据
+        node_name (str): 要查找的节点名称
+        
+    Returns:
+        Dict: 找到的节点，如果未找到返回None
+    """
     if tree["name"] == node_name:
         return tree
     if "children" in tree:
@@ -220,13 +327,23 @@ def find_node_in_tree(tree, node_name):
     return None
 
 def parse_nmap_results(results_dir: str) -> Dict:
-    """解析Nmap扫描结果"""
+    """
+    解析Nmap扫描结果
+    
+    从AutoRecon结果目录中解析Nmap XML文件，提取开放端口和服务信息
+    
+    Args:
+        results_dir (str): AutoRecon结果目录路径
+        
+    Returns:
+        Dict: 包含主机IP和开放端口服务信息的字典
+    """
     nmap_data = {}
     logger.info(f"Parsing Nmap results from: {results_dir}")
     
     # results_dir 已经是 results/<ip> 这样的路径
     target_ip = os.path.basename(results_dir)
-    autorecon_output_base_path = os.path.join(results_dir, target_ip)
+    autorecon_output_base_path = os.path.join(results_dir)
     scans_base_path = os.path.join(autorecon_output_base_path, 'scans')
 
     # 初始化目标IP的数据结构
@@ -260,13 +377,24 @@ def parse_nmap_results(results_dir: str) -> Dict:
     return nmap_data
 
 def parse_vulnerability_data(results_dir: str) -> Dict:
-    """解析漏洞扫描结果"""
+    """
+    解析漏洞扫描结果
+    
+    从AutoRecon结果目录中解析各种漏洞扫描工具的输出，
+    包括Nikto、Enum4Linux、SMBMap等工具的结果
+    
+    Args:
+        results_dir (str): AutoRecon结果目录路径
+        
+    Returns:
+        Dict: 包含主机IP和漏洞信息的字典
+    """
     vuln_data = {}
     logger.info(f"Parsing vulnerability data from: {results_dir}")
 
     # results_dir 已经是 results/<ip> 这样的路径
     target_ip = os.path.basename(results_dir)
-    autorecon_output_base_path = os.path.join(results_dir, target_ip)
+    autorecon_output_base_path = os.path.join(results_dir)
 
     # 遍历所有服务目录下的报告文件
     services_report_path = os.path.join(autorecon_output_base_path, 'report', 'report.md', target_ip, 'Services')
@@ -274,6 +402,7 @@ def parse_vulnerability_data(results_dir: str) -> Dict:
         for service_dir_name in os.listdir(services_report_path):
             service_dir_path = os.path.join(services_report_path, service_dir_name)
             if os.path.isdir(service_dir_path):
+                # 使用正则表达式解析服务目录名称，提取协议、端口和服务名
                 match = re.search(r'Service - (tcp|udp)-(\d+)-(.+)', service_dir_name)
                 if match:
                     protocol = match.group(1)
@@ -294,6 +423,7 @@ def parse_vulnerability_data(results_dir: str) -> Dict:
                                     with open(file_path, 'r', encoding='utf-8', errors='ignore') as f:
                                         content = f.read()
 
+                                    # 解析Nikto扫描结果
                                     if "nikto" in file_name.lower():
                                         findings = re.findall(r'\+ (.*)', content)
                                         if findings:
@@ -313,6 +443,7 @@ def parse_vulnerability_data(results_dir: str) -> Dict:
                                                 "affected_services": [f"{service_name} ({port})"]
                                             })
 
+                                    # 解析Enum4Linux扫描结果
                                     elif "enum4linux" in file_name.lower():
                                         if "no null session" not in content.lower() and "failed to connect" not in content.lower():
                                             vuln_data[host_ip].append({
@@ -329,6 +460,7 @@ def parse_vulnerability_data(results_dir: str) -> Dict:
                                                 "affected_services": [f"{service_name} ({port})"]
                                             })
 
+                                    # 解析SMBMap扫描结果
                                     elif "smbmap" in file_name.lower():
                                         if "read" in content.lower() or "write" in content.lower():
                                             vuln_data[host_ip].append({
@@ -345,6 +477,7 @@ def parse_vulnerability_data(results_dir: str) -> Dict:
                                                 "affected_services": [f"{service_name} ({port})"]
                                             })
                                     
+                                    # 解析Nbtscan扫描结果
                                     elif "nbtscan" in file_name.lower():
                                         if "name server" in content.lower() and "<00>" in content.lower():
                                             vuln_data[host_ip].append({
@@ -369,7 +502,18 @@ def parse_vulnerability_data(results_dir: str) -> Dict:
     return vuln_data
 
 def generate_network_graph(nmap_data: Dict, vuln_data: Dict) -> Dict:
-    """生成网络关系树状图数据"""
+    """
+    生成网络关系树状图数据
+    
+    将Nmap扫描结果和漏洞数据转换为前端可视化所需的树状结构
+    
+    Args:
+        nmap_data (Dict): Nmap扫描结果数据
+        vuln_data (Dict): 漏洞扫描结果数据
+        
+    Returns:
+        Dict: 树状结构的网络拓扑图数据
+    """
     logger.info("Generating network tree graph")
     
     tree_data = {
@@ -406,28 +550,26 @@ def generate_network_graph(nmap_data: Dict, vuln_data: Dict) -> Dict:
                         # For Nikto findings, try to extract a more concise summary from description
                         summary_match = re.search(r'^\S.*?:\s*(.+?)(?:\s*See:|$)', vuln_info["description"])
                         if summary_match:
-                            display_name = summary_match.group(1).strip()[:50] + "..."
+                            display_name = f"[{vuln_info['severity'].title()}] {summary_match.group(1)[:50]}..."
                         else:
-                            display_name = vuln_info["description"].strip()[:50] + "..."
-                    elif len(vuln_info["description"]) > 50:
-                        display_name = vuln_info["description"].strip()[:50] + "..."
+                            display_name = f"[{vuln_info['severity'].title()}] {vuln_info['name']}"
+                    else:
+                        display_name = f"[{vuln_info['severity'].title()}] {vuln_info['name']}"
                     
-                    # Prepend severity to the display name
-                    full_display_name = f"[{vuln_info['severity'].capitalize()}] {display_name}"
-
                     vuln_node = {
-                        "name": full_display_name,
+                        "name": display_name,
                         "attributes": {
                             "type": "vulnerability",
                             "severity": vuln_info["severity"],
                             "description": vuln_info["description"]
-                        }
+                        },
+                        "children": []
                     }
                     service_node["children"].append(vuln_node)
-        
+
         tree_data["children"].append(host_node)
 
-    logger.info(f"Generated tree with {len(tree_data['children'])} top-level hosts.")
+    logger.info(f"Generated network graph with {len(tree_data['children'])} hosts")
     return tree_data
 
 @app.post("/upload")
@@ -563,14 +705,27 @@ async def delete_node(request: DeleteNodeRequest):
     else:
         raise HTTPException(status_code=404, detail=f"Node {request.node_name} not found")
 
+# ============================================================================
+# 核心扫描功能
+# ============================================================================
+
 def run_autorecon(ip: str, scan_id: str):
-    """在后台运行AutoRecon扫描"""
+    """
+    在后台运行AutoRecon扫描
+    
+    启动AutoRecon工具对指定IP进行全面的渗透测试扫描，
+    包括端口扫描、服务识别、漏洞扫描等
+    
+    Args:
+        ip (str): 目标IP地址
+        scan_id (str): 扫描任务ID
+    """
     try:
-        # 创建结果目录，以 IP 为名，autorecon 内部会再创建一层以 IP 为名的子目录
-        results_dir = f"results/{ip}"
+        # 只用results目录，AutoRecon会自动在里面创建ip子目录
+        results_dir = "results"
         os.makedirs(results_dir, exist_ok=True)
         
-        # 运行AutoRecon
+        # 运行AutoRecon命令
         process = subprocess.Popen(
             ["autorecon", ip, "-o", results_dir, "--ignore-plugin-checks", "--disable-keyboard-control"],
             stdout=subprocess.PIPE,
@@ -580,50 +735,120 @@ def run_autorecon(ip: str, scan_id: str):
         )
         
         # 将实际的 results_dir 路径存储到 scan_status 中，以便后续获取结果
-        scan_status[scan_id]["results_dir"] = results_dir
+        scan_status[scan_id]["results_dir"] = os.path.join(results_dir, ip)
         
-        # 读取输出
+        # 读取输出，添加超时和限制
+        start_time = time.time()
+        max_duration = 3600  # 最大运行1小时
+        max_logs = 1000  # 减少最大日志条数到1000
+        
         while True:
-            output = process.stdout.readline()
-            if output == '' and process.poll() is not None:
+            # 检查超时
+            if time.time() - start_time > max_duration:
+                logger.warning(f"AutoRecon scan for {ip} timed out after {max_duration} seconds")
+                process.terminate()
+                scan_status[scan_id]["status"] = "failed"
+                scan_status[scan_id]["error"] = "Scan timed out"
+                cleanup_completed_scan(scan_id)
+                cleanup_old_scan_status()
                 break
-            if output:
-                scan_status[scan_id]["logs"].append(output.strip())
+            
+            # 检查日志数量限制
+            if len(scan_status[scan_id]["logs"]) > max_logs:
+                logger.warning(f"AutoRecon scan for {ip} exceeded log limit ({max_logs})")
+                process.terminate()
+                scan_status[scan_id]["status"] = "failed"
+                scan_status[scan_id]["error"] = "Too many log entries"
+                cleanup_completed_scan(scan_id)
+                cleanup_old_scan_status()
+                break
+            
+            # 使用select进行非阻塞读取，避免CPU占用过高
+            ready, _, _ = select.select([process.stdout], [], [], 1.0)  # 1秒超时
+            
+            if ready:
+                output = process.stdout.readline()
+                if output == '' and process.poll() is not None:
+                    break
+                if output:
+                    scan_status[scan_id]["logs"].append(output.strip())
+                    # 限制日志数组大小，只保留最新的日志
+                    if len(scan_status[scan_id]["logs"]) > max_logs:
+                        scan_status[scan_id]["logs"] = scan_status[scan_id]["logs"][-max_logs:]
+            else:
+                # 如果没有输出，检查进程是否还在运行
+                if process.poll() is not None:
+                    break
+            
+            # 增加延迟，减少CPU占用
+            time.sleep(0.1)  # 增加到100ms
         
         # 检查扫描结果
         if process.returncode == 0:
             scan_status[scan_id]["status"] = "completed"
+            logger.info(f"AutoRecon scan for {ip} completed successfully")
         else:
             scan_status[scan_id]["status"] = "failed"
             scan_status[scan_id]["error"] = "AutoRecon scan failed"
+            logger.error(f"AutoRecon scan for {ip} failed with return code: {process.returncode}")
+        
+        # 清理扫描状态
+        cleanup_completed_scan(scan_id)
+        cleanup_old_scan_status()
             
     except Exception as e:
         scan_status[scan_id]["status"] = "failed"
         scan_status[scan_id]["error"] = str(e)
+        logger.error(f"Exception in AutoRecon scan for {ip}: {str(e)}")
+        cleanup_completed_scan(scan_id)
+        cleanup_old_scan_status()
+
+# ============================================================================
+# API端点定义
+# ============================================================================
 
 @app.post("/scan")
 async def start_scan(request: ScanRequest):
+    """
+    启动新的扫描任务
+    
+    接收扫描请求，检查现有结果，启动AutoRecon扫描
+    
+    Args:
+        request (ScanRequest): 包含目标IP和覆盖选项的扫描请求
+        
+    Returns:
+        JSONResponse: 包含扫描ID和状态信息的响应
+    """
     ip = request.ip
-    overwrite = request.overwrite # Get the overwrite flag from the request
+    overwrite = request.overwrite  # Get the overwrite flag from the request
+    
+    # 在开始新扫描前清理旧的扫描状态
+    cleanup_old_scan_status()
+    
     scan_id = str(uuid.uuid4())
     scan_status[scan_id] = {"status": "pending", "logs": [], "start_time": datetime.now(), "ip": ip}
 
     # Define paths
     results_dir = os.path.join("results", ip)
-    autorecon_output_dir = os.path.join(results_dir, ip)
 
-    # If overwrite is true, delete the existing results directory
-    if overwrite and os.path.exists(results_dir):
-        logger.info(f"Overwriting existing results for {ip}. Deleting directory: {results_dir}")
-        try:
-            shutil.rmtree(results_dir)
-            logger.info(f"Successfully deleted {results_dir}")
-        except OSError as e:
-            logger.error(f"Error deleting directory {results_dir}: {e}")
-            raise HTTPException(status_code=500, detail=f"Failed to delete existing results: {e}")
-
-    # Create the results directory if it doesn't exist
-    os.makedirs(autorecon_output_dir, exist_ok=True)
+    # 如果results/<ip>目录已存在
+    if os.path.exists(results_dir):
+        if overwrite:
+            logger.info(f"Overwriting existing results for {ip}. Deleting directory: {results_dir}")
+            try:
+                shutil.rmtree(results_dir)
+                logger.info(f"Successfully deleted {results_dir}")
+            except OSError as e:
+                logger.error(f"Error deleting directory {results_dir}: {e}")
+                raise HTTPException(status_code=500, detail=f"Failed to delete existing results: {e}")
+        else:
+            logger.info(f"Results for {ip} already exist and overwrite is False. Not starting new scan.")
+            return JSONResponse({
+                "message": f"Results for {ip} already exist. Set overwrite=True to rescan.",
+                "scan_id": None,
+                "ip": ip
+            })
 
     # Start AutoRecon in a separate thread
     thread = Thread(target=run_autorecon, args=(ip, scan_id))
@@ -634,13 +859,24 @@ async def start_scan(request: ScanRequest):
 
 @app.get("/scan_status/{scan_id}")
 async def get_scan_status(scan_id: str):
+    """
+    获取扫描状态和日志
+    
+    返回指定扫描任务的当前状态、日志和错误信息
+    
+    Args:
+        scan_id (str): 扫描任务ID
+        
+    Returns:
+        Dict: 包含扫描状态、日志和错误信息的字典
+    """
     logger.info(f"Received request for scan status for scan_id: {scan_id}")
     if scan_id not in scan_status:
         logger.error(f"Scan with scan_id: {scan_id} not found.")
         raise HTTPException(status_code=404, detail="Scan not found")
     
     status = scan_status[scan_id]
-    all_logs = status["logs"] # 返回所有已累积的日志
+    all_logs = status["logs"]  # 返回所有已累积的日志
     
     logger.info(f"Returning status '{status['status']}' for scan_id: {scan_id}")
     return {
@@ -651,23 +887,40 @@ async def get_scan_status(scan_id: str):
 
 @app.get("/check_results_exists/{ip}")
 async def check_results_exists(ip: str):
+    """
+    检查指定IP的扫描结果是否存在
+    
+    Args:
+        ip (str): 目标IP地址
+        
+    Returns:
+        Dict: 包含结果存在状态的字典
+    """
     logger.info(f"Received request to check results existence for IP: {ip}")
-    # autorecon的输出路径是 results/<ip>/<ip>/...
-    autorecon_output_path = Path(f"results/{ip}/{ip}")
-    exists = autorecon_output_path.is_dir()
+    # 检查 results/<ip> 目录是否存在
+    results_path = Path(f"results/{ip}")
+    exists = results_path.is_dir()
     logger.info(f"Results for IP: {ip} exists: {exists}")
     return {"exists": exists}
 
 @app.get("/load_existing_results/{ip}")
 async def load_existing_results(ip: str):
+    """
+    加载指定IP的现有扫描结果
+    
+    解析并返回已存在的扫描结果，包括网络拓扑图数据
+    
+    Args:
+        ip (str): 目标IP地址
+        
+    Returns:
+        Dict: 包含网络拓扑图数据的字典
+    """
     logger.info(f"Received request to load existing results for IP: {ip}")
-    # results_dir 传递给 parse_nmap_results 和 parse_vulnerability_data 的应该是 results/<ip>
+    # 只检查 results/<ip> 目录
     results_root_dir = f"results/{ip}"
-    # autorecon的实际输出在 results/<ip>/<ip>
-    autorecon_actual_output_dir = os.path.join(results_root_dir, ip)
-
-    if not Path(autorecon_actual_output_dir).is_dir():
-        logger.error(f"Results for IP: {ip} not found at {autorecon_actual_output_dir}")
+    if not Path(results_root_dir).is_dir():
+        logger.error(f"Results for IP: {ip} not found at {results_root_dir}")
         raise HTTPException(status_code=404, detail="Results for this IP not found")
 
     nmap_data = parse_nmap_results(results_root_dir)
@@ -682,6 +935,17 @@ async def load_existing_results(ip: str):
 
 @app.get("/scan_results/{scan_id}")
 async def get_scan_results(scan_id: str):
+    """
+    获取扫描结果
+    
+    解析并返回指定扫描任务的完整结果，包括网络拓扑图数据
+    
+    Args:
+        scan_id (str): 扫描任务ID
+        
+    Returns:
+        Dict: 包含网络拓扑图数据的字典
+    """
     logger.info(f"Received request for scan results for scan_id: {scan_id}")
     if scan_id not in scan_status:
         logger.error(f"Scan with scan_id: {scan_id} not found for results.")
@@ -711,10 +975,20 @@ async def get_scan_results(scan_id: str):
 
 @app.get("/analyze_scan_results/{ip}")
 async def analyze_scan_results(ip: str):
-    logger.info(f"Received request to analyze scan results for IP: {ip}")
-    """自动调用DeepSeek分析AutoRecon扫描结果"""
-    results_path = f"results/{ip}/{ip}" # AutoRecon's output path
+    """
+    自动调用DeepSeek分析AutoRecon扫描结果
     
+    使用AI对扫描结果进行智能分析，生成渗透测试建议
+    
+    Args:
+        ip (str): 目标IP地址
+        
+    Returns:
+        Dict: 包含AI分析报告的字典
+    """
+    logger.info(f"Received request to analyze scan results for IP: {ip}")
+    results_path = f"results/{ip}"  # 修正为只查找 results/{ip}
+
     if not Path(results_path).is_dir():
         logger.error(f"AutoRecon results not found for IP: {ip} at path: {results_path}")
         raise HTTPException(status_code=404, detail=f"AutoRecon results not found for IP: {ip}")
@@ -732,94 +1006,153 @@ async def analyze_scan_results(ip: str):
 
 @app.post("/upload_compressed_results")
 async def upload_compressed_results(file: UploadFile = File(...)):
-    logger.info(f"Received compressed file upload: {file.filename}")
-    temp_file_path = Path("temp_compressed") / file.filename
-    temp_extract_dir = Path("temp_extracted")
-
-    # Clean up any previous temp directories
-    if temp_file_path.parent.exists():
-        shutil.rmtree(temp_file_path.parent)
-    temp_file_path.parent.mkdir(parents=True, exist_ok=True)
-
-    if temp_extract_dir.exists():
-        shutil.rmtree(temp_extract_dir)
-    temp_extract_dir.mkdir(parents=True, exist_ok=True)
-
-    try:
-        # Save the uploaded file temporarily
-        async with aiofiles.open(temp_file_path, "wb") as out_file:
-            while content := await file.read(1024):
-                await out_file.write(content)
-        logger.info(f"Saved compressed file to: {temp_file_path}")
-
-        # Decompress the file
-        if zipfile.is_zipfile(temp_file_path):
-            with zipfile.ZipFile(temp_file_path, "r") as zip_ref:
-                zip_ref.extractall(temp_extract_dir)
-            logger.info(f"Decompressed zip file to: {temp_extract_dir}")
-        elif tarfile.is_tarfile(temp_file_path):
-            with tarfile.open(temp_file_path, "r") as tar_ref:
-                tar_ref.extractall(temp_extract_dir)
-            logger.info(f"Decompressed tar file to: {temp_extract_dir}")
-        else:
-            raise HTTPException(status_code=400, detail="Unsupported file type. Please upload a .zip or .tar.gz file.")
-
-        # Find the actual IP directory inside the extracted content
-        # Assumes the extracted content will have a single root directory which is the IP
-        extracted_contents = list(temp_extract_dir.iterdir())
-        if not extracted_contents or not extracted_contents[0].is_dir():
-            raise HTTPException(status_code=400, detail="Extracted content does not contain a single IP directory.")
-
-        ip_dir = extracted_contents[0]
-        ip_address = ip_dir.name
-
-        # Move the extracted IP directory to the results directory
-        target_results_dir = Path("results") / ip_address
-
-        if target_results_dir.exists():
-            logger.info(f"Existing results for {ip_address} found. Overwriting.")
-            shutil.rmtree(target_results_dir)
+    """
+    上传压缩的AutoRecon结果文件
+    
+    支持上传ZIP、TAR.GZ等压缩格式的AutoRecon扫描结果，
+    自动解压并解析结果数据
+    
+    Args:
+        file (UploadFile): 上传的压缩文件
         
-        shutil.move(ip_dir, target_results_dir)
-        logger.info(f"Moved extracted results to: {target_results_dir}")
-
-        # Process the results (similar to handleLoadExistingResults)
-        nmap_data = parse_nmap_results(str(target_results_dir))
-        vuln_data = parse_vulnerability_data(str(target_results_dir))
-        graph_data = generate_network_graph(nmap_data, vuln_data)
-
-        # Save analysis results and trigger AI analysis (if applicable)
-        analysis_id = f"analysis_{ip_address}_{datetime.now().strftime('%Y%m%d_%H%M%S')}"
-        analysis_results[analysis_id] = {
-            "nmap_data": nmap_data,
-            "vuln_data": vuln_data,
-            "graph_data": graph_data,
-            "timestamp": datetime.now().strftime("%Y%m%d_%H%M%S")
-        }
-
-        # Trigger AI analysis
-        # This will be done by the frontend after getting the graph data
-
-        return JSONResponse({
-            "message": "Compressed file uploaded and processed successfully",
-            "ip": ip_address,
-            "analysis_id": analysis_id,
-            "graph_data": graph_data
-        })
-
-    except HTTPException as e:
-        raise e
+    Returns:
+        Dict: 包含上传状态和解析结果的字典
+    """
+    try:
+        # 创建临时目录
+        temp_dir = "temp_compressed"
+        os.makedirs(temp_dir, exist_ok=True)
+        
+        # 保存上传的文件
+        file_path = os.path.join(temp_dir, file.filename)
+        with open(file_path, "wb") as buffer:
+            shutil.copyfileobj(file.file, buffer)
+        
+        # 解压文件
+        extract_dir = os.path.join(temp_dir, "extracted")
+        os.makedirs(extract_dir, exist_ok=True)
+        
+        # 根据文件扩展名选择解压方法
+        if file.filename.endswith('.zip'):
+            with zipfile.ZipFile(file_path, 'r') as zip_ref:
+                zip_ref.extractall(extract_dir)
+        elif file.filename.endswith('.tar.gz') or file.filename.endswith('.tgz'):
+            with tarfile.open(file_path, 'r:gz') as tar_ref:
+                tar_ref.extractall(extract_dir)
+        elif file.filename.endswith('.tar'):
+            with tarfile.open(file_path, 'r') as tar_ref:
+                tar_ref.extractall(extract_dir)
+        else:
+            raise HTTPException(status_code=400, detail="Unsupported file format")
+        
+        # 移动解压的内容到results目录
+        results_dir = "results"
+        os.makedirs(results_dir, exist_ok=True)
+        
+        # 查找解压后的IP目录
+        extracted_contents = os.listdir(extract_dir)
+        uploaded_ip = None
+        
+        if len(extracted_contents) == 1 and os.path.isdir(os.path.join(extract_dir, extracted_contents[0])):
+            # 如果只有一个目录，假设它是IP目录
+            ip_dir = extracted_contents[0]
+            source_path = os.path.join(extract_dir, ip_dir)
+            target_path = os.path.join(results_dir, ip_dir)
+            
+            if os.path.exists(target_path):
+                shutil.rmtree(target_path)
+            
+            shutil.move(source_path, target_path)
+            uploaded_ip = ip_dir
+            logger.info(f"Successfully uploaded and extracted results for IP: {ip_dir}")
+        else:
+            # 如果有多个文件/目录，直接移动到results
+            for item in extracted_contents:
+                source_path = os.path.join(extract_dir, item)
+                target_path = os.path.join(results_dir, item)
+                
+                if os.path.exists(target_path):
+                    if os.path.isdir(target_path):
+                        shutil.rmtree(target_path)
+                    else:
+                        os.remove(target_path)
+                
+                shutil.move(source_path, target_path)
+            
+            logger.info("Successfully uploaded and extracted results")
+            return {"message": "Successfully uploaded results"}
+        
+        # 解析上传的结果并返回graph_data
+        if uploaded_ip:
+            try:
+                results_root_dir = f"results/{uploaded_ip}"
+                nmap_data = parse_nmap_results(results_root_dir)
+                vuln_data = parse_vulnerability_data(results_root_dir)
+                graph_data = generate_network_graph(nmap_data, vuln_data)
+                
+                logger.info(f"Successfully parsed uploaded results for IP: {uploaded_ip}")
+                return {
+                    "message": f"Successfully uploaded results for IP: {uploaded_ip}",
+                    "ip": uploaded_ip,
+                    "graph_data": graph_data
+                }
+            except Exception as parse_err:
+                logger.error(f"Error parsing uploaded results for IP {uploaded_ip}: {str(parse_err)}")
+                return {
+                    "message": f"Successfully uploaded results for IP: {uploaded_ip}, but failed to parse: {str(parse_err)}",
+                    "ip": uploaded_ip
+                }
+            
     except Exception as e:
-        logger.error(f"Error processing compressed file: {str(e)}", exc_info=True)
-        raise HTTPException(status_code=500, detail=f"Failed to process compressed file: {str(e)}")
+        logger.error(f"Error uploading compressed results: {str(e)}")
+        raise HTTPException(status_code=500, detail=f"Upload failed: {str(e)}")
     finally:
-        # Clean up temporary files and directories
-        if temp_file_path.exists():
-            os.remove(temp_file_path)
-        if temp_extract_dir.exists():
-            shutil.rmtree(temp_extract_dir)
-        logger.info(f"Cleaned up temporary files: {temp_file_path} and {temp_extract_dir}")
+        # 清理临时文件
+        try:
+            if os.path.exists(file_path):
+                os.remove(file_path)
+            if os.path.exists(extract_dir):
+                shutil.rmtree(extract_dir)
+        except Exception as e:
+            logger.warning(f"Error cleaning up temporary files: {str(e)}")
+
+@app.post("/cleanup_scan_status")
+async def cleanup_scan_status():
+    """
+    手动清理所有扫描状态
+    
+    用于紧急清理所有扫描状态数据，释放内存
+    
+    Returns:
+        Dict: 包含清理结果的字典
+    """
+    try:
+        global scan_status
+        old_count = len(scan_status)
+        scan_status.clear()
+        logger.info(f"Manually cleaned up {old_count} scan status entries")
+        return {"message": f"Cleaned up {old_count} scan status entries"}
+    except Exception as e:
+        logger.error(f"Error cleaning up scan status: {str(e)}")
+        raise HTTPException(status_code=500, detail=f"Cleanup failed: {str(e)}")
+
+@app.get("/scan_status_count")
+async def get_scan_status_count():
+    """
+    获取当前扫描状态数量
+    
+    返回当前活跃的扫描任务数量和最大限制
+    
+    Returns:
+        Dict: 包含扫描状态数量和最大限制的字典
+    """
+    return {"count": len(scan_status), "max_entries": MAX_SCAN_STATUS_ENTRIES}
+
+# ============================================================================
+# 应用启动
+# ============================================================================
 
 if __name__ == "__main__":
     import uvicorn
+    # 启动FastAPI应用服务器
     uvicorn.run(app, host="0.0.0.0", port=8000) 

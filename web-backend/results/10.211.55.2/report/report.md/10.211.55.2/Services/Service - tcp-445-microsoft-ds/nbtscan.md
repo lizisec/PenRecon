@@ -1,0 +1,24 @@
+```bash
+nbtscan -rvh 10.211.55.2 2>&1
+```
+
+[/home/lizi/Desktop/myproj/PenRecon/web-backend/results/10.211.55.2/scans/tcp445/nbtscan.txt](file:///home/lizi/Desktop/myproj/PenRecon/web-backend/results/10.211.55.2/scans/tcp445/nbtscan.txt):
+
+```
+Doing NBT name scan for addresses from 10.211.55.2
+
+
+NetBIOS Name Table for Host 10.211.55.2:
+
+Incomplete packet, 155 bytes long.
+Name             Service          Type
+----------------------------------------
+LIZI             Workstation Service
+LIZI             File Server Service
+WORKGROUP        Domain Name
+
+Adapter address: 8a:66:5a:01:d0:64
+----------------------------------------
+
+
+```

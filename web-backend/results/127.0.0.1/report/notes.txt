@@ -1,0 +1,44 @@
+[*] microsoft-ds found on tcp/445.
+
+
+
+[*] mysql found on tcp/3306.
+
+
+
+[*] newoak found on tcp/4001.
+
+
+
+[*] http found on tcp/8000.
+
+
+
+[*] tcpwrapped found on tcp/8021.
+
+
+
+[*] http found on tcp/9090.
+
+
+
+[*] d-data found on tcp/4301.
+
+
+
+[*] mirrtex found on tcp/4310.
+
+
+
+[*] socks5 found on tcp/7890.
+
+
+
+[*] oma-mlp found on tcp/9210.
+
+
+
+[*] mysqlx found on tcp/33060.
+
+
+

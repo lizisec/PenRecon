@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE nmaprun>
+<?xml-stylesheet href="file:///usr/share/nmap/nmap.xsl" type="text/xsl"?>
+<!-- Nmap 7.95 scan initiated Wed Jun 18 14:56:49 2025 as: /usr/lib/nmap/nmap -&#45;privileged -vv -&#45;reason -Pn -T4 -sV -sC -&#45;version-all -A -&#45;osscan-guess -p- -oN /home/lizi/Desktop/myproj/PenRecon/web-backend/results/192.168.1.1/scans/_full_tcp_nmap.txt -oX /home/lizi/Desktop/myproj/PenRecon/web-backend/results/192.168.1.1/scans/xml/_full_tcp_nmap.xml 192.168.1.1 -->
+<nmaprun scanner="nmap" args="/usr/lib/nmap/nmap -&#45;privileged -vv -&#45;reason -Pn -T4 -sV -sC -&#45;version-all -A -&#45;osscan-guess -p- -oN /home/lizi/Desktop/myproj/PenRecon/web-backend/results/192.168.1.1/scans/_full_tcp_nmap.txt -oX /home/lizi/Desktop/myproj/PenRecon/web-backend/results/192.168.1.1/scans/xml/_full_tcp_nmap.xml 192.168.1.1" start="1750229809" startstr="Wed Jun 18 14:56:49 2025" version="7.95" xmloutputversion="1.05">
+<scaninfo type="syn" protocol="tcp" numservices="65535" services="1-65535"/>
+<verbose level="2"/>
+<debugging level="0"/>
+<taskbegin task="NSE" time="1750229809"/>
+<taskend task="NSE" time="1750229809"/>
+<taskbegin task="NSE" time="1750229809"/>
+<taskend task="NSE" time="1750229809"/>
+<taskbegin task="NSE" time="1750229809"/>
+<taskend task="NSE" time="1750229809"/>
+<taskbegin task="Parallel DNS resolution of 1 host." time="1750229809"/>
+<taskend task="Parallel DNS resolution of 1 host." time="1750229809"/>
+<taskbegin task="SYN Stealth Scan" time="1750229809"/>
+<taskprogress task="SYN Stealth Scan" time="1750229840" percent="14.67" remaining="181" etc="1750230020"/>
+<taskprogress task="SYN Stealth Scan" time="1750229870" percent="18.67" remaining="266" etc="1750230136"/>
+<taskprogress task="SYN Stealth Scan" time="1750229900" percent="22.58" remaining="313" etc="1750230212"/>
+<taskprogress task="SYN Stealth Scan" time="1750229933" percent="27.14" remaining="333" etc="1750230266"/>
+<taskprogress task="SYN Stealth Scan" time="1750230053" percent="44.08" remaining="310" etc="1750230363"/>

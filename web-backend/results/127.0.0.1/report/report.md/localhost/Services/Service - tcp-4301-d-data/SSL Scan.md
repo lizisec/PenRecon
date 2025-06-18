@@ -1,0 +1,75 @@
+```bash
+sslscan --show-certificate --no-colour localhost:4301 2>&1
+```
+
+[/Users/lizi/Desktop/PenRecon/web-backend/results/localhost/scans/tcp4301/tcp_4301_sslscan.html](file:///Users/lizi/Desktop/PenRecon/web-backend/results/localhost/scans/tcp4301/tcp_4301_sslscan.html):
+
+```
+ERROR: Could not open a connection to host localhost (::1) on port 4301 (connect: Connection refused).
+Version: 2.1.6
+OpenSSL 3.5.0 8 Apr 2025
+
+Connected to 127.0.0.1
+
+Testing SSL server localhost on port 4301 using SNI name localhost
+
+  SSL/TLS Protocols:
+SSLv2     disabled
+SSLv3     disabled
+TLSv1.0   disabled
+TLSv1.1   disabled
+TLSv1.2   enabled
+TLSv1.3   enabled
+
+  TLS Fallback SCSV:
+Connection failed - unable to determine TLS Fallback SCSV support
+
+  TLS renegotiation:
+Session renegotiation not supported
+
+  TLS Compression:
+OpenSSL version does not support compression
+Rebuild with zlib1g-dev package for zlib support
+
+  Heartbleed:
+TLSv1.3 not vulnerable to heartbleed
+TLSv1.2 not vulnerable to heartbleed
+
+  Supported Server Cipher(s):
+Preferred TLSv1.3  128 bits  TLS_AES_128_GCM_SHA256        Curve 25519 DHE 253
+Accepted  TLSv1.3  256 bits  TLS_AES_256_GCM_SHA384        Curve 25519 DHE 253
+Accepted  TLSv1.3  256 bits  TLS_CHACHA20_POLY1305_SHA256  Curve 25519 DHE 253
+Preferred TLSv1.2  128 bits  ECDHE-RSA-AES128-GCM-SHA256   Curve 25519 DHE 253
+Accepted  TLSv1.2  256 bits  ECDHE-RSA-AES256-GCM-SHA384   Curve 25519 DHE 253
+Accepted  TLSv1.2  256 bits  ECDHE-RSA-CHACHA20-POLY1305   Curve 25519 DHE 253
+Accepted  TLSv1.2  128 bits  ECDHE-RSA-AES128-SHA          Curve 25519 DHE 253
+Accepted  TLSv1.2  256 bits  ECDHE-RSA-AES256-SHA          Curve 25519 DHE 253
+Accepted  TLSv1.2  128 bits  AES128-GCM-SHA256
+Accepted  TLSv1.2  256 bits  AES256-GCM-SHA384
+Accepted  TLSv1.2  128 bits  AES128-SHA
+Accepted  TLSv1.2  256 bits  AES256-SHA
+Accepted  TLSv1.2  112 bits  TLS_ECDHE_RSA_WITH_3DES_EDE_CBC_SHA
+Accepted  TLSv1.2  112 bits  TLS_RSA_WITH_3DES_EDE_CBC_SHA
+
+  Server Key Exchange Group(s):
+TLSv1.3  128 bits  secp256r1 (NIST P-256)
+TLSv1.3  192 bits  secp384r1 (NIST P-384)
+TLSv1.3  260 bits  secp521r1 (NIST P-521)
+TLSv1.3  128 bits  x25519
+TLSv1.2  128 bits  secp256r1 (NIST P-256)
+TLSv1.2  192 bits  secp384r1 (NIST P-384)
+TLSv1.2  128 bits  x25519
+
+  SSL Certificate:
+Signature Algorithm: sha256WithRSAEncryption
+RSA Key Strength:    2048
+
+Subject:  localhost.ptlogin2.qq.com
+Altnames: DNS:localhost.ptlogin2.qq.com, DNS:localhost.ptlogin2.tencent.com, DNS:localhost.ptlogin2.tenpay.com, DNS:localhost.ptlogin2.weiyun.com
+Issuer:   DigiCert Secure Site OV G2 TLS CN RSA4096 SHA256 2022 CA1
+
+Not valid before: May 16 00:00:00 2025 GMT
+Not valid after:  Jun 16 23:59:59 2026 GMT
+
+
+```

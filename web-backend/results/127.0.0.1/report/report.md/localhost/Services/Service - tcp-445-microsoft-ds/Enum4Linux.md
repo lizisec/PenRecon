@@ -1,0 +1,42 @@
+```bash
+enum4linux -a -M -l -d localhost 2>&1
+```
+
+[/Users/lizi/Desktop/PenRecon/web-backend/results/localhost/scans/tcp445/enum4linux.txt](file:///Users/lizi/Desktop/PenRecon/web-backend/results/localhost/scans/tcp445/enum4linux.txt):
+
+```
+"my" variable $which_output masks earlier declaration in same scope at /usr/local/bin/enum4linux line 280.
+WARNING: polenum is not in your path.  Check that package is installed and your PATH is sane.
+Starting enum4linux v0.9.1 ( http://labs.portcullis.co.uk/application/enum4linux/ ) on Sun Jun 15 16:21:49 2025
+
+[34m =========================================( [0m[32mTarget Information[0m[34m )=========================================
+
+[0mTarget ........... localhost
+RID Range ........ 500-550,1000-1050
+Username ......... ''
+Password ......... ''
+Known Usernames .. administrator, guest, krbtgt, domain admins, root, bin, none
+
+
+[34m =============================( [0m[32mEnumerating Workgroup/Domain on localhost[0m[34m )=============================
+
+[0mCan't load /usr/local/etc/smb.conf - run testparm to debug it
+[33m
+[E] [0m[31mCan't find workgroup/domain
+
+[0m
+
+[34m =================================( [0m[32mNbtstat Information for localhost[0m[34m )=================================
+
+[0mCan't load /usr/local/etc/smb.conf - run testparm to debug it
+Looking up status of 127.0.0.1
+No reply from 127.0.0.1
+
+[34m =====================================( [0m[32mSession Check on localhost[0m[34m )=====================================
+
+[0m[33m
+[E] [0m[31mServer doesn't allow session using username '', password ''.  Aborting remainder of tests.
+
+[0m
+
+```

@@ -1,0 +1,3 @@
+Can't load /usr/local/etc/smb.conf - run testparm to debug it
+session setup failed: NT_STATUS_LOGON_FAILURE
+

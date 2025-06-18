@@ -1,0 +1,182 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE nmaprun>
+<?xml-stylesheet href="file:///usr/local/bin/../share/nmap/nmap.xsl" type="text/xsl"?>
+<!-- Nmap 7.95 scan initiated Sun Jun 15 16:21:49 2025 as: nmap -vv -&#45;reason -Pn -T4 -sV -p 3306 &quot;-&#45;script=banner,(mysql* or ssl*) and not (brute or broadcast or dos or external or fuzzer)&quot; -oN /Users/lizi/Desktop/PenRecon/web-backend/results/localhost/scans/tcp3306/tcp_3306_mysql_nmap.txt -oX /Users/lizi/Desktop/PenRecon/web-backend/results/localhost/scans/tcp3306/xml/tcp_3306_mysql_nmap.xml localhost -->
+<nmaprun scanner="nmap" args="nmap -vv -&#45;reason -Pn -T4 -sV -p 3306 &quot;-&#45;script=banner,(mysql* or ssl*) and not (brute or broadcast or dos or external or fuzzer)&quot; -oN /Users/lizi/Desktop/PenRecon/web-backend/results/localhost/scans/tcp3306/tcp_3306_mysql_nmap.txt -oX /Users/lizi/Desktop/PenRecon/web-backend/results/localhost/scans/tcp3306/xml/tcp_3306_mysql_nmap.xml localhost" start="1749975709" startstr="Sun Jun 15 16:21:49 2025" version="7.95" xmloutputversion="1.05">
+<scaninfo type="connect" protocol="tcp" numservices="1" services="3306"/>
+<verbose level="2"/>
+<debugging level="0"/>
+<taskbegin task="NSE" time="1749975709"/>
+<taskend task="NSE" time="1749975709"/>
+<taskbegin task="NSE" time="1749975709"/>
+<taskend task="NSE" time="1749975709"/>
+<taskbegin task="NSE" time="1749975709"/>
+<taskend task="NSE" time="1749975709"/>
+<taskbegin task="Connect Scan" time="1749975709"/>
+<taskend task="Connect Scan" time="1749975709" extrainfo="1 total ports"/>
+<taskbegin task="Service scan" time="1749975709"/>
+<taskend task="Service scan" time="1749975726" extrainfo="1 service on 1 host"/>
+<taskbegin task="NSE" time="1749975726"/>
+<taskend task="NSE" time="1749975729"/>
+<taskbegin task="NSE" time="1749975729"/>
+<taskend task="NSE" time="1749975730"/>
+<taskbegin task="NSE" time="1749975730"/>
+<taskend task="NSE" time="1749975730"/>
+<host starttime="1749975709" endtime="1749975730"><status state="up" reason="user-set" reason_ttl="0"/>
+<address addr="127.0.0.1" addrtype="ipv4"/>
+<hostnames>
+<hostname name="localhost" type="user"/>
+<hostname name="localhost" type="PTR"/>
+</hostnames>
+<ports><port protocol="tcp" portid="3306"><state state="open" reason="syn-ack" reason_ttl="0"/><service name="mysql" servicefp="SF-Port3306-TCP:V=7.95%I=7%D=6/15%Time=684E82A3%P=x86_64-apple-darwin23.6.0%r(NULL,4D,&quot;I\0\0\0\n9\.3\.0\0\xac\x01\0\0elL\&quot;!\x16\*\?\0\xff\xff\xff\x02\0\xff\xdf\x15\0\0\0\0\0\0\0\0\0\0m5V&apos;\x0b\x0e\x1fO\&quot;aoi\0caching_sha2_password\0&quot;)%r(GenericLines,72,&quot;I\0\0\0\n9\.3\.0\0\xac\x01\0\0elL\&quot;!\x16\*\?\0\xff\xff\xff\x02\0\xff\xdf\x15\0\0\0\0\0\0\0\0\0\0m5V&apos;\x0b\x0e\x1fO\&quot;aoi\0caching_sha2_password\0!\0\0\x01\xff\x84\x04#08S01Got\x20packets\x20out\x20of\x20order&quot;)%r(GetRequest,72,&quot;I\0\0\0\n9\.3\.0\0\xad\x01\0\0g-0\x0csz\^o\0\xff\xff\xff\x02\0\xff\xdf\x15\0\0\0\0\0\0\0\0\0\0oNO\)\)rdIV\|o;\0caching_sha2_password\0!\0\0\x01\xff\x84\x04#08S01Got\x20packets\x20out\x20of\x20order&quot;)%r(HTTPOptions,72,&quot;I\0\0\0\n9\.3\.0\0\xae\x01\0\0&lt;QBm\x0fqO8\0\xff\xff\xff\x02\0\xff\xdf\x15\0\0\0\0\0\0\0\0\0\0\x03_q&amp;Q5c&amp;\x187/b\0caching_sha2_password\0!\0\0\x01\xff\x84\x04#08S01Got\x20packets\x20out\x20of\x20order&quot;)%r(RTSPRequest,72,&quot;I\0\0\0\n9\.3\.0\0\xaf\x01\0\0;\x0cP}\.P\x1a%\0\xff\xff\xff\x02\0\xff\xdf\x15\0\0\0\0\0\0\0\0\0\0Q\x12xm=1\x1e_\x03\&quot;L&apos;\0caching_sha2_password\0!\0\0\x01\xff\x84\x04#08S01Got\x20packets\x20out\x20of\x20order&quot;)%r(RPCCheck,72,&quot;I\0\0\0\n9\.3\.0\0\xb0\x01\0\0&apos;z5{\x14`ll\0\xff\xff\xff\x02\0\xff\xdf\x15\0\0\0\0\0\0\0\0\0\0s\x1eP\x06m/l{&lt;\+I;\0caching_sha2_password\0!\0\0\x01\xff\x84\x04#08S01Got\x20packets\x20out\x20of\x20order&quot;)%r(DNSVersionBindReqTCP,72,&quot;I\0\0\0\n9\.3\.0\0\xb1\x01\0\0,\)\x1fzXX\x03j\0\xff\xff\xff\x02\0\xff\xdf\x15\0\0\0\0\0\0\0\0\0\x005\t3x\x13&apos;1U\x0esS2\0caching_sha2_password\0!\0\0\x01\xff\x84\x04#08S01Got\x20packets\x20out\x20of\x20order&quot;)%r(DNSStatusRequestTCP,72,&quot;I\0\0\0\n9\.3\.0\0\xb2\x01\0\0\)Rmf\x03\x1caV\0\xff\xff\xff\x02\0\xff\xdf\x15\0\0\0\0\0\0\0\0\0\0\x05\x1e\n-\x1b\*Mt#\x13oN\0caching_sha2_password\0!\0\0\x01\xff\x84\x04#08S01Got\x20packets\x20out\x20of\x20order&quot;)%r(Help,72,&quot;I\0\0\0\n9\.3\.0\0\xb3\x01\0\0z3/\x0c\x04\x02=;\0\xff\xff\xff\x02\0\xff\xdf\x15\0\0\0\0\0\0\0\0\0\0\(\x1eIN\^\x03\x0cT:N1=\0caching_sha2_password\0!\0\0\x01\xff\x84\x04#08S01Got\x20packets\x20out\x20of\x20order&quot;)%r(SSLSessionReq,72,&quot;I\0\0\0\n9\.3\.0\0\xb4\x01\0\x009XBbseg-\0\xff\xff\xff\x02\0\xff\xdf\x15\0\0\0\0\0\0\0\0\0\0\]2i\]\n9J:T\*I\&quot;\0caching_sha2_password\0!\0\0\x01\xff\x84\x04#08S01Got\x20packets\x20out\x20of\x20order&quot;);" method="table" conf="3"/><script id="ssl-enum-ciphers" output="&#xa;  TLSv1.2: &#xa;    ciphers: &#xa;      TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256 (secp256r1) - A&#xa;      TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384 (secp256r1) - A&#xa;      TLS_ECDHE_RSA_WITH_CHACHA20_POLY1305_SHA256 (secp256r1) - A&#xa;      TLS_DHE_RSA_WITH_AES_128_GCM_SHA256 (dh 2048) - A&#xa;      TLS_DHE_RSA_WITH_AES_256_GCM_SHA384 (dh 2048) - A&#xa;      TLS_DHE_RSA_WITH_AES_256_CCM (dh 2048) - A&#xa;      TLS_DHE_RSA_WITH_AES_128_CCM (dh 2048) - A&#xa;      TLS_DHE_RSA_WITH_CHACHA20_POLY1305_SHA256 (dh 2048) - A&#xa;    compressors: &#xa;      NULL&#xa;    cipher preference: server&#xa;  TLSv1.3: &#xa;    ciphers: &#xa;      TLS_AKE_WITH_AES_128_GCM_SHA256 (secp256r1) - A&#xa;      TLS_AKE_WITH_AES_256_GCM_SHA384 (secp256r1) - A&#xa;      TLS_AKE_WITH_CHACHA20_POLY1305_SHA256 (secp256r1) - A&#xa;      TLS_AKE_WITH_AES_128_CCM_SHA256 (secp256r1) - A&#xa;    cipher preference: server&#xa;  least strength: A"><table key="TLSv1.2">
+<table key="ciphers">
+<table>
+<elem key="name">TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256</elem>
+<elem key="strength">A</elem>
+<elem key="kex_info">secp256r1</elem>
+</table>
+<table>
+<elem key="name">TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384</elem>
+<elem key="strength">A</elem>
+<elem key="kex_info">secp256r1</elem>
+</table>
+<table>
+<elem key="name">TLS_ECDHE_RSA_WITH_CHACHA20_POLY1305_SHA256</elem>
+<elem key="strength">A</elem>
+<elem key="kex_info">secp256r1</elem>
+</table>
+<table>
+<elem key="name">TLS_DHE_RSA_WITH_AES_128_GCM_SHA256</elem>
+<elem key="strength">A</elem>
+<elem key="kex_info">dh 2048</elem>
+</table>
+<table>
+<elem key="name">TLS_DHE_RSA_WITH_AES_256_GCM_SHA384</elem>
+<elem key="strength">A</elem>
+<elem key="kex_info">dh 2048</elem>
+</table>
+<table>
+<elem key="name">TLS_DHE_RSA_WITH_AES_256_CCM</elem>
+<elem key="strength">A</elem>
+<elem key="kex_info">dh 2048</elem>
+</table>
+<table>
+<elem key="name">TLS_DHE_RSA_WITH_AES_128_CCM</elem>
+<elem key="strength">A</elem>
+<elem key="kex_info">dh 2048</elem>
+</table>
+<table>
+<elem key="name">TLS_DHE_RSA_WITH_CHACHA20_POLY1305_SHA256</elem>
+<elem key="strength">A</elem>
+<elem key="kex_info">dh 2048</elem>
+</table>
+</table>
+<table key="compressors">
+<elem>NULL</elem>
+</table>
+<elem key="cipher preference">server</elem>
+</table>
+<table key="TLSv1.3">
+<table key="ciphers">
+<table>
+<elem key="name">TLS_AKE_WITH_AES_128_GCM_SHA256</elem>
+<elem key="strength">A</elem>
+<elem key="kex_info">secp256r1</elem>
+</table>
+<table>
+<elem key="name">TLS_AKE_WITH_AES_256_GCM_SHA384</elem>
+<elem key="strength">A</elem>
+<elem key="kex_info">secp256r1</elem>
+</table>
+<table>
+<elem key="name">TLS_AKE_WITH_CHACHA20_POLY1305_SHA256</elem>
+<elem key="strength">A</elem>
+<elem key="kex_info">secp256r1</elem>
+</table>
+<table>
+<elem key="name">TLS_AKE_WITH_AES_128_CCM_SHA256</elem>
+<elem key="strength">A</elem>
+<elem key="kex_info">secp256r1</elem>
+</table>
+</table>
+<elem key="cipher preference">server</elem>
+</table>
+<elem key="least strength">A</elem>
+</script><script id="ssl-date" output="TLS randomness does not represent time"></script><script id="banner" output="I\x00\x00\x00\x0A9.3.0\x00\xAC\x01\x00\x00elL&quot;!\x16*?\x00\xFF\x&#xa;FF\xFF\x02\x00\xFF\xDF\x15\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00m5V&apos;\&#xa;x0B\x0E\x1FO&quot;aoi\x00caching_sha2_password\x00"/><script id="ssl-cert" output="Subject: commonName=MySQL_Server_9.3.0_Auto_Generated_Server_Certificate&#xa;Issuer: commonName=MySQL_Server_9.3.0_Auto_Generated_CA_Certificate&#xa;Public Key type: rsa&#xa;Public Key bits: 2048&#xa;Signature Algorithm: sha256WithRSAEncryption&#xa;Not valid before: 2025-05-25T14:26:33&#xa;Not valid after:  2035-05-23T14:26:33&#xa;MD5:   bf95:9e10:96e8:94b7:ef38:0f1c:d8c2:5ecc&#xa;SHA-1: 73a6:e7c7:0def:22b9:c02d:7c29:497a:3ff6:bf9e:fcf7&#xa;-&#45;&#45;&#45;&#45;BEGIN CERTIFICATE-&#45;&#45;&#45;&#45;&#xa;MIIDBTCCAe2gAwIBAgIBAjANBgkqhkiG9w0BAQsFADA7MTkwNwYDVQQDDDBNeVNR&#xa;TF9TZXJ2ZXJfOS4zLjBfQXV0b19HZW5lcmF0ZWRfQ0FfQ2VydGlmaWNhdGUwHhcN&#xa;MjUwNTI1MTQyNjMzWhcNMzUwNTIzMTQyNjMzWjA/MT0wOwYDVQQDDDRNeVNRTF9T&#xa;ZXJ2ZXJfOS4zLjBfQXV0b19HZW5lcmF0ZWRfU2VydmVyX0NlcnRpZmljYXRlMIIB&#xa;IjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAmy1yda/6EQRklbKpDkDfTj7s&#xa;AqFfl+yjRkSKrWXEJD7xaWqw+Lq4dIr9olcBLGMsSBN/m5cmmrnnPYgVKMIC+F5d&#xa;W48ZdF0JB610YVjyOuuMUsV93BcGxHWT8pM8wDBnpXwiTrOw+8Cov9ux69HqrYD8&#xa;DwRJv5VHZ63+adaQXhD6j0pEDV1+fGg2BzEuHJ0ETa/SwAfwaqiGHRwrSMilV3ca&#xa;oLk9jVZJRkXyAFZvcN5W/J3OZZdldGsuqOzXIrQMNDKPyAl/L5NRwnC4JfQbA7Tp&#xa;Z6QR/b+Cj8TOCn3t4epKJJ91EjuWDwSAI1ClvT8/rReatDFSJS2mF/9yTBCAQwID&#xa;AQABoxAwDjAMBgNVHRMBAf8EAjAAMA0GCSqGSIb3DQEBCwUAA4IBAQBMFRCb3eCo&#xa;y4vRTXmITeOfu2fMoYutT4R5Awy4+6GnwEyXlf1Czd2hyH7NkvqRcOWlf2hPBI0V&#xa;0rmC0FILFBcJXePMpnR5UQqmzLKLtzA02xyn9LJJi4CXre39RsN59gbUvbL5hcAp&#xa;hYHG4gsvH2eUXI9PvkW4pni2hCqJg9V1NEUDN5lES3/xOXFZF1qFrZ5Ev3QsPEzy&#xa;KfOcPA78I8DYcPlOMm05NQ3Pp6TsAWycbPURSnyh20IrrB0TMccfGHDhQiX8FbxL&#xa;le3jGgvd1WCoeiUQd16+WRWIctvHg0mX/8Z77gOmazdpYSX1e5HV5pQOvYVYTn75&#xa;0xPuB6n6lFT+&#xa;-&#45;&#45;&#45;&#45;END CERTIFICATE-&#45;&#45;&#45;&#45;&#xa;"><table key="subject">
+<elem key="commonName">MySQL_Server_9.3.0_Auto_Generated_Server_Certificate</elem>
+</table>
+<table key="issuer">
+<elem key="commonName">MySQL_Server_9.3.0_Auto_Generated_CA_Certificate</elem>
+</table>
+<table key="pubkey">
+<elem key="type">rsa</elem>
+<elem key="bits">2048</elem>
+<elem key="modulus">9B2D7275AFFA11046495B2A90E40DF4E3EEC02A15F97ECA346448AAD65C4243EF1696AB0F8BAB8748AFDA257012C632C48137F9B97269AB9E73D881528C202F85E5D5B8F19745D0907AD746158F23AEB8C52C57DDC1706C47593F2933CC03067A57C224EB3B0FBC0A8BFDBB1EBD1EAAD80FC0F0449BF954767ADFE69D6905E10FA8F4A440D5D7E7C683607312E1C9D044DAFD2C007F06AA8861D1C2B48C8A557771AA0B93D8D56494645F200566F70DE56FC9DCE659765746B2EA8ECD722B40C34328FC8097F2F9351C270B825F41B03B4E967A411FDBF828FC4CE0A7DEDE1EA4A249F75123B960F04802350A5BD3F3FAD179AB43152252DA617FF724C108043</elem>
+<elem key="exponent">65537</elem>
+</table>
+<table key="extensions">
+<table>
+<elem key="name">X509v3 Basic Constraints</elem>
+<elem key="value">CA:FALSE</elem>
+<elem key="critical">true</elem>
+</table>
+</table>
+<elem key="sig_algo">sha256WithRSAEncryption</elem>
+<table key="validity">
+<elem key="notBefore">2025-05-25T14:26:33</elem>
+<elem key="notAfter">2035-05-23T14:26:33</elem>
+</table>
+<elem key="md5">bf959e1096e894b7ef380f1cd8c25ecc</elem>
+<elem key="sha1">73a6e7c70def22b9c02d7c29497a3ff6bf9efcf7</elem>
+<elem key="pem">-&#45;&#45;&#45;&#45;BEGIN CERTIFICATE-&#45;&#45;&#45;&#45;&#xa;MIIDBTCCAe2gAwIBAgIBAjANBgkqhkiG9w0BAQsFADA7MTkwNwYDVQQDDDBNeVNR&#xa;TF9TZXJ2ZXJfOS4zLjBfQXV0b19HZW5lcmF0ZWRfQ0FfQ2VydGlmaWNhdGUwHhcN&#xa;MjUwNTI1MTQyNjMzWhcNMzUwNTIzMTQyNjMzWjA/MT0wOwYDVQQDDDRNeVNRTF9T&#xa;ZXJ2ZXJfOS4zLjBfQXV0b19HZW5lcmF0ZWRfU2VydmVyX0NlcnRpZmljYXRlMIIB&#xa;IjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAmy1yda/6EQRklbKpDkDfTj7s&#xa;AqFfl+yjRkSKrWXEJD7xaWqw+Lq4dIr9olcBLGMsSBN/m5cmmrnnPYgVKMIC+F5d&#xa;W48ZdF0JB610YVjyOuuMUsV93BcGxHWT8pM8wDBnpXwiTrOw+8Cov9ux69HqrYD8&#xa;DwRJv5VHZ63+adaQXhD6j0pEDV1+fGg2BzEuHJ0ETa/SwAfwaqiGHRwrSMilV3ca&#xa;oLk9jVZJRkXyAFZvcN5W/J3OZZdldGsuqOzXIrQMNDKPyAl/L5NRwnC4JfQbA7Tp&#xa;Z6QR/b+Cj8TOCn3t4epKJJ91EjuWDwSAI1ClvT8/rReatDFSJS2mF/9yTBCAQwID&#xa;AQABoxAwDjAMBgNVHRMBAf8EAjAAMA0GCSqGSIb3DQEBCwUAA4IBAQBMFRCb3eCo&#xa;y4vRTXmITeOfu2fMoYutT4R5Awy4+6GnwEyXlf1Czd2hyH7NkvqRcOWlf2hPBI0V&#xa;0rmC0FILFBcJXePMpnR5UQqmzLKLtzA02xyn9LJJi4CXre39RsN59gbUvbL5hcAp&#xa;hYHG4gsvH2eUXI9PvkW4pni2hCqJg9V1NEUDN5lES3/xOXFZF1qFrZ5Ev3QsPEzy&#xa;KfOcPA78I8DYcPlOMm05NQ3Pp6TsAWycbPURSnyh20IrrB0TMccfGHDhQiX8FbxL&#xa;le3jGgvd1WCoeiUQd16+WRWIctvHg0mX/8Z77gOmazdpYSX1e5HV5pQOvYVYTn75&#xa;0xPuB6n6lFT+&#xa;-&#45;&#45;&#45;&#45;END CERTIFICATE-&#45;&#45;&#45;&#45;&#xa;</elem>
+</script><script id="mysql-info" output="&#xa;  Protocol: 10&#xa;  Version: 9.3.0&#xa;  Thread ID: 469&#xa;  Capabilities flags: 65535&#xa;  Some Capabilities: LongPassword, IgnoreSigpipes, FoundRows, Speaks41ProtocolOld, Support41Auth, SupportsCompression, ConnectWithDatabase, IgnoreSpaceBeforeParenthesis, SupportsTransactions, ODBCClient, InteractiveClient, DontAllowDatabaseTableColumn, Speaks41ProtocolNew, SupportsLoadDataLocal, LongColumnFlag, SwitchToSSLAfterHandshake, SupportsMultipleStatments, SupportsMultipleResults, SupportsAuthPlugins&#xa;  Status: Autocommit&#xa;  Salt: jI!17E2JYWo\x05GYA\x0B &apos;u@&#xa;  Auth Plugin Name: caching_sha2_password"><elem key="Protocol">10</elem>
+<elem key="Version">9.3.0</elem>
+<elem key="Thread ID">469</elem>
+<elem key="Capabilities flags">65535</elem>
+<table key="Some Capabilities">
+<elem>LongPassword</elem>
+<elem>IgnoreSigpipes</elem>
+<elem>FoundRows</elem>
+<elem>Speaks41ProtocolOld</elem>
+<elem>Support41Auth</elem>
+<elem>SupportsCompression</elem>
+<elem>ConnectWithDatabase</elem>
+<elem>IgnoreSpaceBeforeParenthesis</elem>
+<elem>SupportsTransactions</elem>
+<elem>ODBCClient</elem>
+<elem>InteractiveClient</elem>
+<elem>DontAllowDatabaseTableColumn</elem>
+<elem>Speaks41ProtocolNew</elem>
+<elem>SupportsLoadDataLocal</elem>
+<elem>LongColumnFlag</elem>
+<elem>SwitchToSSLAfterHandshake</elem>
+<elem>SupportsMultipleStatments</elem>
+<elem>SupportsMultipleResults</elem>
+<elem>SupportsAuthPlugins</elem>
+</table>
+<elem key="Status">Autocommit</elem>
+<elem key="Salt">jI!17E2JYWo\x05GYA\x0B &apos;u@</elem>
+<elem key="Auth Plugin Name">caching_sha2_password</elem>
+</script><script id="fingerprint-strings" output="&#xa;  DNSStatusRequestTCP: &#xa;    9.3.0&#xa;    )Rmf&#xa;    *Mt#&#xa;    caching_sha2_password&#xa;    #08S01Got packets out of order&#xa;  DNSVersionBindReqTCP: &#xa;    9.3.0&#xa;    caching_sha2_password&#xa;    #08S01Got packets out of order&#xa;  GenericLines: &#xa;    9.3.0&#xa;    elL&quot;!&#xa;    m5V&apos;&#xa;    O&quot;aoi&#xa;    caching_sha2_password&#xa;    #08S01Got packets out of order&#xa;  GetRequest: &#xa;    9.3.0&#xa;    sz^o&#xa;    oNO))rdIV|o;&#xa;    caching_sha2_password&#xa;    #08S01Got packets out of order&#xa;  HTTPOptions: &#xa;    9.3.0&#xa;    &lt;QBm&#xa;    _q&amp;Q5c&amp;&#xa;    caching_sha2_password&#xa;    #08S01Got packets out of order&#xa;  Help: &#xa;    9.3.0&#xa;    T:N1=&#xa;    caching_sha2_password&#xa;    #08S01Got packets out of order&#xa;  NULL: &#xa;    9.3.0&#xa;    elL&quot;!&#xa;    m5V&apos;&#xa;    O&quot;aoi&#xa;    caching_sha2_password&#xa;  RPCCheck: &#xa;    9.3.0&#xa;    &apos;z5{&#xa;    m/l{&lt;+I;&#xa;    caching_sha2_password&#xa;    #08S01Got packets out of order&#xa;  RTSPRequest: &#xa;    9.3.0&#xa;    P}.P&#xa;    xm=1&#xa;    caching_sha2_password&#xa;    #08S01Got packets out of order&#xa;  SSLSessionReq: &#xa;    9.3.0&#xa;    9XBbseg-&#xa;    ]2i]&#xa;    9J:T*I&quot;&#xa;    caching_sha2_password&#xa;    #08S01Got packets out of order"><elem key="DNSStatusRequestTCP">&#xa;    9.3.0&#xa;    )Rmf&#xa;    *Mt#&#xa;    caching_sha2_password&#xa;    #08S01Got packets out of order</elem>
+<elem key="DNSVersionBindReqTCP">&#xa;    9.3.0&#xa;    caching_sha2_password&#xa;    #08S01Got packets out of order</elem>
+<elem key="GenericLines">&#xa;    9.3.0&#xa;    elL&quot;!&#xa;    m5V&apos;&#xa;    O&quot;aoi&#xa;    caching_sha2_password&#xa;    #08S01Got packets out of order</elem>
+<elem key="GetRequest">&#xa;    9.3.0&#xa;    sz^o&#xa;    oNO))rdIV|o;&#xa;    caching_sha2_password&#xa;    #08S01Got packets out of order</elem>
+<elem key="HTTPOptions">&#xa;    9.3.0&#xa;    &lt;QBm&#xa;    _q&amp;Q5c&amp;&#xa;    caching_sha2_password&#xa;    #08S01Got packets out of order</elem>
+<elem key="Help">&#xa;    9.3.0&#xa;    T:N1=&#xa;    caching_sha2_password&#xa;    #08S01Got packets out of order</elem>
+<elem key="NULL">&#xa;    9.3.0&#xa;    elL&quot;!&#xa;    m5V&apos;&#xa;    O&quot;aoi&#xa;    caching_sha2_password</elem>
+<elem key="RPCCheck">&#xa;    9.3.0&#xa;    &apos;z5{&#xa;    m/l{&lt;+I;&#xa;    caching_sha2_password&#xa;    #08S01Got packets out of order</elem>
+<elem key="RTSPRequest">&#xa;    9.3.0&#xa;    P}.P&#xa;    xm=1&#xa;    caching_sha2_password&#xa;    #08S01Got packets out of order</elem>
+<elem key="SSLSessionReq">&#xa;    9.3.0&#xa;    9XBbseg-&#xa;    ]2i]&#xa;    9J:T*I&quot;&#xa;    caching_sha2_password&#xa;    #08S01Got packets out of order</elem>
+</script></port>
+</ports>
+<times srtt="123" rttvar="5000" to="100000"/>
+</host>
+<taskbegin task="NSE" time="1749975730"/>
+<taskend task="NSE" time="1749975730"/>
+<taskbegin task="NSE" time="1749975730"/>
+<taskend task="NSE" time="1749975730"/>
+<taskbegin task="NSE" time="1749975730"/>
+<taskend task="NSE" time="1749975730"/>
+<runstats><finished time="1749975730" timestr="Sun Jun 15 16:22:10 2025" summary="Nmap done at Sun Jun 15 16:22:10 2025; 1 IP address (1 host up) scanned in 21.40 seconds" elapsed="21.40" exit="success"/><hosts up="1" down="0" total="1"/>
+</runstats>
+</nmaprun>

@@ -1,0 +1,16 @@
+
+    ________  ___      ___  _______   ___      ___       __         _______
+   /"       )|"  \    /"  ||   _  "\ |"  \    /"  |     /""\       |   __ "\
+  (:   \___/  \   \  //   |(. |_)  :) \   \  //   |    /    \      (. |__) :)
+   \___  \    /\  \/.    ||:     \/   /\   \/.    |   /' /\  \     |:  ____/
+    __/  \   |: \.        |(|  _  \  |: \.        |  //  __'  \    (|  /
+   /" \   :) |.  \    /:  ||: |_)  :)|.  \    /:  | /   /  \   \  /|__/ \
+  (_______/  |___|\__/|___|(_______/ |___|\__/|___|(___/    \___)(_______)
+-----------------------------------------------------------------------------
+SMBMap - Samba Share Enumerator v1.10.7 | Shawn Evans - ShawnDEvans@gmail.com
+                     https://github.com/ShawnDEvans/smbmap
+
+[\] Checking for open ports...                                                                                                    [*] Detected 1 hosts serving SMB
+[|] Authenticating...                                                                                                    [*] Established 1 SMB connections(s) and 0 authenticated session(s)
+[/] Closing connections..                                                                                                    [-] Closing connections..                                                                                                    [\] Closing connections..                                                                                                    [|] Closing connections..                                                                                                    [/] Closing connections..                                                                                                    [-] Closing connections..                                                                                                                                                                                                        [*] Closed 1 connections
+

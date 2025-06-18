@@ -1,0 +1,58 @@
+```bash
+nmap -vv --reason -Pn -T4 -sV -p 445 --script="banner,(nbstat or smb* or ssl*) and not (brute or broadcast or dos or external or fuzzer)" -oN "/Users/lizi/Desktop/PenRecon/web-backend/results/localhost/scans/tcp445/tcp_445_smb_nmap.txt" -oX "/Users/lizi/Desktop/PenRecon/web-backend/results/localhost/scans/tcp445/xml/tcp_445_smb_nmap.xml" localhost
+```
+
+[/Users/lizi/Desktop/PenRecon/web-backend/results/localhost/scans/tcp445/tcp_445_smb_nmap.txt](file:///Users/lizi/Desktop/PenRecon/web-backend/results/localhost/scans/tcp445/tcp_445_smb_nmap.txt):
+
+```
+# Nmap 7.95 scan initiated Sun Jun 15 16:21:49 2025 as: nmap -vv --reason -Pn -T4 -sV -p 445 "--script=banner,(nbstat or smb* or ssl*) and not (brute or broadcast or dos or external or fuzzer)" -oN /Users/lizi/Desktop/PenRecon/web-backend/results/localhost/scans/tcp445/tcp_445_smb_nmap.txt -oX /Users/lizi/Desktop/PenRecon/web-backend/results/localhost/scans/tcp445/xml/tcp_445_smb_nmap.xml localhost
+Warning: Hostname localhost resolves to 2 IPs. Using 127.0.0.1.
+Nmap scan report for localhost (127.0.0.1)
+Host is up, received user-set (0.00012s latency).
+Other addresses for localhost (not scanned): ::1
+Scanned at 2025-06-15 16:21:49 CST for 61s
+
+PORT    STATE SERVICE       REASON  VERSION
+445/tcp open  microsoft-ds? syn-ack
+|_smb-enum-services: ERROR: Script execution failed (use -d to debug)
+
+Host script results:
+| smb2-time: 
+|   date: 2025-06-15T08:21:17
+|_  start_date: N/A
+| smb2-capabilities: 
+|   2:0:2: 
+|     All capabilities are disabled
+|   2:1:0: 
+|     Leasing
+|     Multi-credit operations
+|   3:0:0: 
+|     Leasing
+|     Multi-credit operations
+|   3:0:2: 
+|     Leasing
+|_    Multi-credit operations
+| smb-protocols: 
+|   dialects: 
+|     2:0:2
+|     2:1:0
+|     3:0:0
+|_    3:0:2
+|_smb-vuln-ms10-061: Could not negotiate a connection:SMB: Failed to receive bytes: EOF
+|_smb-print-text: false
+| smb-psexec: Can't find the service file: nmap_service.exe (or nmap_service).
+| Due to false positives in antivirus software, this module is no
+| longer included by default. Please download it from
+| https://nmap.org/psexec/nmap_service.exe
+|_and place it in nselib/data/psexec/ under the Nmap DATADIR.
+| smb2-security-mode: 
+|   3:0:2: 
+|_    Message signing enabled and required
+| smb-mbenum: 
+|_  ERROR: Failed to connect to browser service: Could not negotiate a connection:SMB: Failed to receive bytes: EOF
+
+Read data files from: /usr/local/bin/../share/nmap
+Service detection performed. Please report any incorrect results at https://nmap.org/submit/ .
+# Nmap done at Sun Jun 15 16:22:50 2025 -- 1 IP address (1 host up) scanned in 61.22 seconds
+
+```
