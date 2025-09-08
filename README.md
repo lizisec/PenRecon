@@ -306,40 +306,7 @@ tail -f web-backend/logs/app.log
 sudo journalctl -u penrecon -f
 ```
 
-## 🤝 参与贡献
 
-### 如何贡献
-
-1. Fork 项目
-2. 创建功能分支 (`git checkout -b feature/AmazingFeature`)
-3. 提交更改 (`git commit -m 'Add some AmazingFeature'`)
-4. 推送到分支 (`git push origin feature/AmazingFeature`)
-5. 打开 Pull Request
-
-### 开发建议
-
-- 遵循现有的代码风格
-- 添加必要的测试
-- 更新相关文档
-- 确保基本功能正常
-
-## 📄 许可证
-
-本项目采用 MIT 许可证 - 查看 [LICENSE](LICENSE) 文件了解详情。
-
-## 🙏 致谢
-
-- [AutoRecon](https://github.com/Tib3rius/AutoRecon) - 自动化网络侦察工具
-- [FastAPI](https://fastapi.tiangolo.com/) - Python Web 框架
-- [React](https://reactjs.org/) - JavaScript UI 库
-- [DeepSeek](https://www.deepseek.com/) - AI 分析服务
-
-## 📞 联系方式
-
-- **项目维护者**: PenRecon Team
-- **邮箱**: support@penrecon.com
-- **项目主页**: https://github.com/penrecon/penrecon
-- **问题反馈**: https://github.com/penrecon/penrecon/issues
 
 ---
 
